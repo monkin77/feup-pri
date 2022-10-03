@@ -21,9 +21,27 @@ company_data['happiness'] = pd.to_numeric(company_data['happiness'], errors='coe
 print(company_data['happiness'])
  
 # ======== Create 5 columns from the 'ratings' map ========
+ratings = company_data.ratings.tolist()
+rating_dict = []
+for i in range(len(ratings)):
+    if (ratings[i] == str(np.nan)):
+        rating_dict.append({})
+    else:
+        rating_dict.append(eval(ratings[i]))
+    
+keys = ['Compensation/Benefits', 'Job Security/Advancement', 'Management', 'Culture', 'Work/Life Balance']
+new_keys = ['compensation/benefits', 'job_security/advancement', 'management', 'culture', 'work_life_balance']
+
+for key_idx in range(len(keys)):
+    company_data[new_keys[key_idx]] = [x.get(keys[key_idx], np.nan) for x in rating_dict]
+    company_data[new_keys[key_idx]] = pd.to_numeric(company_data[new_keys[key_idx]], errors='coerce')
+ 
+company_data = company_data.drop(['ratings'], axis=1)
+# print("company_data new columns: ", company_data.columns)
 
 
 plt.figure()
-ax = sns.heatmap(company_data[['rating', 'ceo_approval', 'employees', 'revenue', 'happiness']].corr(), xticklabels=True, yticklabels=True, vmin=-1.0, vmax=1.0)
+ax = sns.heatmap(company_data[['rating', 'ceo_approval', 'employees', 'revenue', 'happiness', 'compensation/benefits', 
+    'job_security/advancement', 'management', 'culture', 'work_life_balance']].corr(), xticklabels=True, yticklabels=True, vmin=-1.0, vmax=1.0)
 
 plt.show()

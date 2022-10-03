@@ -30,25 +30,28 @@ def parseRatingObject(obj):
     # print("Deserializing " + obj)
     objDict = json.loads(obj)
     for key, val in objDict.items():
-        if (val == 'NaN'):
-            objDict[key] = np.nan
-        objDict[key] = float(val)
+        if (val == "NaN"):
+            objDict[key] = str(np.nan)
+        else:
+            objDict[key] = float(val)
     return json.dumps(objDict)
 
 def parseHappinessObject(obj):
     objDict = json.loads(obj)
     for key, val in objDict.items():
         if (val == 'NaN'):
-            objDict[key] = np.nan
-        objDict[key] = int(val)
+            objDict[key] = str(np.nan)
+        else:
+            objDict[key] = int(val)
     return json.dumps(objDict)
 
 def parseSalaryObject(obj):
     objDict = json.loads(obj)
     for key, val in objDict.items():
         if (val == 'NaN'):
-            objDict[key] = np.nan
-        objDict[key] = salaryPerHour(val)
+            objDict[key] = str(np.nan)
+        else:
+            objDict[key] = salaryPerHour(val)
         
     return json.dumps(objDict)
 
