@@ -13,24 +13,17 @@ print(f"The clean dataset size is {len(company_data)}")
 # ======== Fill empty values with NaN ========
 company_data = company_data.fillna(np.nan)
 
-# read the ratings data dictionary, and convert it to seperate columns for 
-# each statement. drop the original column
-ratings = company_data.happiness.tolist()
-rating_dict = []
-for i in range(len(ratings)):
-    rating_dict.append(eval(ratings[i]))
-    
-keys = ['Compensation/Benefits', 'Job Security/Advancement', 'Management', 'Culture', 'Work/Life Balance']
-
-for key in keys:
-    company_data[key] = [x.get(key, np.nan) for x in rating_dict]
-    company_data[key] = pd.to_numeric(company_data[key], errors='coerce')
+# ======== Replace 'happiness' column with 'Work Happiness Score' ========
+happiness_params = company_data.happiness.tolist()
+happiness_params = [eval(x).get('Work Happiness Score', np.nan) for x in happiness_params]
+company_data['happiness'] = happiness_params
+company_data['happiness'] = pd.to_numeric(company_data['happiness'], errors='coerce')
+print(company_data['happiness'])
  
-# company_data = company_data.dropna(subset = ['Management', 'Compensation/Benefits','Job Security/Advancement','Culture','Work/Life Balance'])
-company_data = company_data.drop(['happiness'], axis=1)
+# ======== Create 5 columns from the 'ratings' map ========
+
 
 plt.figure()
-ax = sns.heatmap(company_data[['rating', 'ceo_approval', 'employees', 'revenue', 'Management', 'Compensation/Benefits','Job Security/Advancement', 
-    'Culture','Work/Life Balance' ]].corr(), xticklabels=True, yticklabels=True, vmin=-1.0, vmax=1.0)
+ax = sns.heatmap(company_data[['rating', 'ceo_approval', 'employees', 'revenue', 'happiness']].corr(), xticklabels=True, yticklabels=True, vmin=-1.0, vmax=1.0)
 
 plt.show()
