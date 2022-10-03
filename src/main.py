@@ -84,6 +84,10 @@ company_data = pd.read_csv("../assets/company_reviews.csv")
 print(f"The original dataset size was {len(company_data)}")
 
 
+# ======== Drop Useless columns ========
+company_data = company_data.drop(['website'], axis=1)
+
+
 # ======== Fill empty values with NaN ========
 company_data = company_data.fillna(np.nan)
 # company_data = company_data.replace(to_replace = '{}', value=np.nan)
@@ -157,3 +161,14 @@ revenue_mapper = {"less than $1M (USD)":1, "$1M to $5M (USD)":2, "$5M to $25M (U
 company_data['revenue']=company_data['revenue'].replace(revenue_mapper)
 # print(pd.unique(company_data['revenue']))
 
+# ======== Replace 'interview_count' column with a number ========
+company_data['interview_count'] = company_data['interview_count'].str.replace('Based on ', '')
+company_data['interview_count'] = company_data['interview_count'].str.replace(' interviews', '')
+company_data['interview_count'] = company_data['interview_count'].str.replace(',', '')
+company_data['interview_count'] = company_data['interview_count'].replace(np.nan, '0')
+company_data['interview_count'] = company_data['interview_count'].astype(int)
+# print(company_data['interview_count'])
+
+
+# ======== Export to CSV ========
+company_data.to_csv("../assets/cleaned_reviews.csv", index=False)
