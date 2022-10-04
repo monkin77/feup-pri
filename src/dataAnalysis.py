@@ -171,9 +171,21 @@ def show_happiness_correlation():
     plt.show()
     
 
+# ======== Ratings Distribution ========
+def show_ratings_distribution():
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    
+    ax.hist(x=company_data['rating'], bins=40, histtype='bar')
+    ax.set_xlabel('Rating')
+    ax.set_ylabel('Frequency')
+
+    plt.show()
+
 
 # ======== Call Method ========
 # show_all_correlation()
 # show_industry_ratings(False)
 # show_happiness_correlation()
+show_ratings_distribution()
 
