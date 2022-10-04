@@ -108,8 +108,72 @@ def show_worse_industry_ratings(rating_by_industry):
     plt.show()
 
 
+# ======== Relation between the company rating and CEO approval ========
+def show_ceo_approval_rating_correlation():
+    plt.figure()
+    sns.scatterplot(x="ceo_approval", y="rating", data=company_data)
+    plt.title("Company Rating V.S CEO Approval")
+    plt.show()
+
+
+# ======== Relation between the company rating and Compensation/Benefits ========
+def show_ceo_approval_rating_correlation():
+    plt.figure()
+    sns.scatterplot(x="compensation/benefits", y="rating", data=company_data)
+    plt.title("Company Rating V.S Compensation/Benefits")
+    plt.show()
+
+
+# ======== Distribution of rating versus other factors ========
+def show_factors_distribution():
+    plt.figure()
+    sns.kdeplot(company_data['rating'], legend=True)
+    sns.kdeplot(company_data['compensation/benefits'], legend=True)
+    sns.kdeplot(company_data['job_security/advancement'])
+    sns.kdeplot(company_data.management)
+    sns.kdeplot(company_data.culture)
+    sns.kdeplot(company_data['work_life_balance'])
+    plt.legend(labels = ['Rating', 'Management', 'Compensation/Benefits','Job Security/Advancement','Culture','Work/Life Balance' ])
+    plt.show()
+
+
+# ======== Correlation of happiness parameters with rating ========
+def show_happiness_correlation():
+    company_data_with_happiness = pd.read_csv("../assets/cleaned_reviews.csv")
+
+    company_data_with_happiness['happiness'] = company_data_with_happiness['happiness'].fillna(value = "{}")
+    happiness = company_data_with_happiness.happiness.tolist()
+    happiness_dict = []
+    full_dict = {}
+    for i in range(len(happiness)):
+        new_entry = eval(happiness[i])
+        key_list = list(new_entry.keys())
+        new_key_list = ["happiness " + s for s in key_list]
+        for count, key in enumerate(key_list):
+            new_entry[new_key_list[count]] = new_entry.pop(key)
+        
+        full_dict.update(new_entry)
+        happiness_dict.append(new_entry)
+        
+    for key in full_dict.keys():
+        company_data_with_happiness[key] = [x.get(key, np.nan) for x in happiness_dict]
+        company_data_with_happiness[key] = pd.to_numeric(company_data_with_happiness[key], errors='coerce')
+        
+    company_data_with_happiness = company_data_with_happiness.drop(['happiness'], axis=1)
+    for key in full_dict.keys():
+        company_data_with_happiness = company_data_with_happiness.dropna(subset=[key])
+    company_data_with_happiness = company_data_with_happiness.drop(['reviews', 'ceo_count', 'industry'], axis=1)
+
+    plt.figure()
+    key_list = [key for key in full_dict.keys()]
+    key_list.insert(0, 'rating')
+    sns.heatmap(company_data_with_happiness[key_list].corr(), xticklabels=True, yticklabels=True, vmin=0.5, vmax=1.0)
+    plt.show()
+    
 
 
 # ======== Call Method ========
 # show_all_correlation()
-show_industry_ratings(False)
+# show_industry_ratings(False)
+# show_happiness_correlation()
+
