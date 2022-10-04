@@ -71,8 +71,45 @@ def show_revenue_rating_correlation():
     plt.show()
 
 
+# ======== Show Industries with Best/Worse ratings ========
+# Ignoring industries with less than 50 ratings
+def show_industry_ratings(positive):
+    rating_by_industry = company_data.groupby('industry').mean(numeric_only=True).rating.sort_values(ascending=False)
+    count_by_industry = company_data.groupby('industry').count().rating.sort_values(ascending=False)
+    # filter only industries that have more then 50 rows in the dataset
+    industries = count_by_industry[count_by_industry<50].index.tolist()
+    rating_by_industry = rating_by_industry.drop(labels=industries)
+    if (positive):
+        show_best_industry_ratings(rating_by_industry)
+    else:
+        show_worse_industry_ratings(rating_by_industry)
+    
+
+def show_best_industry_ratings(rating_by_industry):
+    plt.figure()
+
+    plt.bar(rating_by_industry.index[0:5], rating_by_industry.tolist()[0:5])
+    low = 3.5
+    high = 4.2
+    plt.ylim(low, high)
+    plt.xticks(rotation=90)
+    plt.title("Best industries for work satisfaction")
+    plt.show()
+
+def show_worse_industry_ratings(rating_by_industry):
+    plt.figure()
+
+    plt.bar(rating_by_industry.index[-5:], rating_by_industry.tolist()[-5:])
+    low = 3.0
+    high = 3.6
+    plt.ylim(low, high)
+    plt.xticks(rotation=90)
+    plt.title("Worse industries for work satisfaction")
+    plt.show()
+
+
 
 
 # ======== Call Method ========
 # show_all_correlation()
-show_revenue_rating_correlation()
+show_industry_ratings(False)

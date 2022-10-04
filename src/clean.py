@@ -87,6 +87,11 @@ company_data = pd.read_csv("../assets/company_reviews.csv")
 print(f"The original dataset size was {len(company_data)}")
 
 
+# ======== Drop Rows without a company name ========
+company_data = company_data.dropna(subset=['name'])
+print(f"Size after removing unidentified companies: {len(company_data)}")
+
+
 # ======== Drop Useless columns ========
 company_data = company_data.drop(['website'], axis=1)
 
