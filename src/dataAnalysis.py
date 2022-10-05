@@ -68,6 +68,7 @@ def show_best_rating_correlation():
     plt.figure()
     sns.heatmap(company_data[['rating', 'ceo_approval', 'happiness', 'compensation/benefits', 
         'job_security/advancement', 'management', 'culture', 'work_life_balance']].corr(), xticklabels=True, yticklabels=True, vmin=0.5, vmax=1.0)
+    plt.title("Correlation between rating and other factors")
     plt.show()
 
 
@@ -219,5 +220,5 @@ def show_ceo_approval_rating_correlation():
 '''
 
 # ======== Call Method ========
-show_revenue_rating_correlation()
+show_ceo_approval_rating_correlation()
 
