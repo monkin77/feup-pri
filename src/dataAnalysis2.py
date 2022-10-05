@@ -1,21 +1,10 @@
-import json
 import numpy as np
 import pandas as pd
 from wordcloud import WordCloud
 from matplotlib import pyplot as plt
+from utils import calcObjectMean
 
-def calcObjectMean(obj):
-  # print("Deserializing " + str(obj))
-  if (str(obj) == str(np.nan)):
-    return np.nan
 
-  objDict = json.loads(obj)
-  sum = 0
-  for key, val in objDict.items():
-      if (val != np.nan and val != "nan"):
-        sum += float(val)
-  meanValue = round(sum / len(objDict), 2) if len(objDict) > 0 else np.nan
-  return meanValue
 
 # ======== read data set ========
 company_data = pd.read_csv("../assets/company_reviews.csv")
@@ -24,11 +13,9 @@ company_data = pd.read_csv("../assets/company_reviews.csv")
 company_data = company_data.replace('{}', np.nan)
 
 # get the missing values of each column of the original dataset
-""" 
 print("Missing values: \n", company_data.isnull().sum(), "\n")
 print("Dataset Size: ", company_data['happiness'].size, "\n")
 print("Filled columns in happiness: ", company_data['happiness'].value_counts().size)
-"""
 
 company_data = pd.read_csv("../assets/cleaned_reviews.csv")
 

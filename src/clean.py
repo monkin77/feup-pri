@@ -2,6 +2,7 @@ import json
 import numpy as np
 import pandas as pd
 import re
+from utils import calculateCustomRating
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 
@@ -187,11 +188,23 @@ company_data['interview'] = [{
         'count': company_data['interview_count'].get(i)} 
         for i in range(len(company_data['name']))]
 
+
+# ======== Create our own custom rating column ========
+# Need to convert into a pandas Series, otherwise it will assign values to Rows that are 'None' which I believe is the same as ignoring them
+company_data['custom_rating'] = pd.Series(calculateCustomRating(company_data))
+#for i in range(0, 29):
+#    print(i, company_data['custom_rating'].get(i), ' - ', company_data['rating'].get(i), ' - ', company_data['ratings'].get(i), ' - ', company_data['happiness'].get(i))
+# print(company_data['custom_rating'].describe())
+
+
 company_data = company_data.drop(['interview_experience'], axis=1)
 company_data = company_data.drop(['interview_difficulty'], axis=1)
 company_data = company_data.drop(['interview_duration'], axis=1)
 company_data = company_data.drop(['interview_count'], axis=1)
 
-# ======== Export to CSV/JSON ========
-#company_data.to_csv("../assets/cleaned_reviews.csv", index=False)
+# ======== Export to CSV ========
+company_data.to_csv("../assets/cleaned_reviews.csv", index=False)
+
+# ======== Export to JSON ========
 company_data.to_json("../assets/cleaned_reviews.json", orient='index')
+
