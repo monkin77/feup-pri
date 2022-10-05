@@ -76,4 +76,3 @@ print("\nRating min value: \n", round(company_data[['rating', 'happiness', 'ceo_
 print("\nRating max value: \n", round(company_data[['rating', 'happiness', 'ceo_approval', 'employees', 'revenue', 'ratings', 'locations', 'salary', 'revenue']].max(), 2))
 print("\nRating median: \n", round(company_data[['rating', 'happiness', 'ceo_approval', 'employees', 'revenue', 'ratings', 'locations', 'salary', 'revenue']].median(), 2))
 
-

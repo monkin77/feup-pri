@@ -109,7 +109,6 @@ company_data['reviews'] = company_data['reviews'].replace(np.nan, '0')
 company_data['reviews'] = company_data['reviews'].replace({'K': '*1e3'}, regex=True).map(pd.eval).astype(int)
 # print(company_data['reviews'])
 
-
 # ======== Convert the "ceo_approval %"" and "ceo_count" to integer ========
 company_data['ceo_count'] = company_data['ceo_count'].str.replace('CEO Approval is based on ', '')
 company_data['ceo_count'] = company_data['ceo_count'].str.replace(' ratings', '')
@@ -120,6 +119,10 @@ company_data['ceo_count'] = pd.to_numeric(company_data['ceo_count'])
 company_data['ceo_approval'] = company_data['ceo_approval'].str.replace('%', '')
 company_data['ceo_approval'] = pd.to_numeric(company_data['ceo_approval'])
 
+company_data['ceo'] = [ {'count': company_data['ceo_count'].get(i), 'approval': company_data['ceo_approval'].get(i)} for i in range(len(company_data['name']))] 
+
+company_data = company_data.drop(['ceo_count'], axis=1)
+company_data = company_data.drop(['ceo_approval'], axis=1)
 
 # ======== Convert the ratings string object to proper JSON format ========
 company_data['ratings'] = company_data['ratings'].str.replace("'", "\"")
@@ -177,6 +180,18 @@ company_data['interview_count'] = company_data['interview_count'].replace(np.nan
 company_data['interview_count'] = company_data['interview_count'].astype(int)
 # print(company_data['interview_count'])
 
+company_data['interview'] = [{
+        'experience:': company_data['interview_experience'].get(i), 
+        'difficulty': company_data['interview_difficulty'].get(i), 
+        'duration': company_data['interview_duration'].get(i),
+        'count': company_data['interview_count'].get(i)} 
+        for i in range(len(company_data['name']))]
 
-# ======== Export to CSV ========
-company_data.to_csv("../assets/cleaned_reviews.csv", index=False)
+company_data = company_data.drop(['interview_experience'], axis=1)
+company_data = company_data.drop(['interview_difficulty'], axis=1)
+company_data = company_data.drop(['interview_duration'], axis=1)
+company_data = company_data.drop(['interview_count'], axis=1)
+
+# ======== Export to CSV/JSON ========
+#company_data.to_csv("../assets/cleaned_reviews.csv", index=False)
+company_data.to_json("../assets/cleaned_reviews.json", orient='index')

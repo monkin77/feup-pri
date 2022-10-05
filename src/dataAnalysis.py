@@ -84,7 +84,7 @@ def show_industry_ratings(positive):
         show_best_industry_ratings(rating_by_industry)
     else:
         show_worse_industry_ratings(rating_by_industry)
-    
+
 
 def show_best_industry_ratings(rating_by_industry):
     plt.figure()
