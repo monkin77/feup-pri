@@ -42,7 +42,7 @@ def parseHappinessObject(obj):
         if (val == 'NaN'):
             objDict[key] = str(np.nan)
         else:
-            objDict[key] = int(val)
+            objDict[key] = int(val) / 20.0
     return json.dumps(objDict)
 
 def parseSalaryObject(obj):
