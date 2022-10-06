@@ -2,30 +2,9 @@ import json
 import numpy as np
 import pandas as pd
 import re
-from utils import calculateCustomRating
+from utils import calculateCustomRating, parseSingleQuote
 # import matplotlib.pyplot as plt
 # import seaborn as sns
-
-# Converts the JSON string single quotes to double quotes
-def parseSingleQuote(obj):
-    newString = ""
-    for idx in range(0, len(obj)):
-        if obj[idx] == "'":
-            if (idx >= 1):
-                prevChar = obj[idx - 1]
-                if (prevChar in ["{", " "]):
-                    newString += "\""
-                    continue
-            if (idx < len(obj) - 1):
-                nextChar = obj[idx + 1]
-                if (nextChar in ["}", ",", ":"]):
-                    newString += "\""
-                    continue
-        newString += obj[idx]
-    
-    # print("parsed ->" + newString)
-    return newString
-
 
 def parseRatingObject(obj):
     # print("Deserializing " + obj)
