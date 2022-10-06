@@ -1,5 +1,6 @@
 from cmath import isnan
 import json
+from tkinter import E
 import numpy as np
 
 '''
@@ -11,12 +12,17 @@ def calcObjectMean(obj):
   if (str(obj) == str(np.nan)):
     return np.nan
 
-  objDict = json.loads(obj)
+  if (type(obj) == str):
+    print("Deserializing " + obj)
+    objDict = json.loads(obj)
+  else:
+    objDict = obj
+
   sum = 0
   for key, val in objDict.items():
       if ((not np.isnan(float(val))) and val != "nan"):
         sum += float(val)
-  meanValue = round(sum / len(objDict), 2) if len(objDict) > 0 else np.nan
+  meanValue = round(sum / len(obj), 2) if len(objDict) > 0 else np.nan
   return meanValue
 
 '''

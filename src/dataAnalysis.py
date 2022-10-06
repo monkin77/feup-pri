@@ -7,7 +7,7 @@ import seaborn as sns
 
 
 # ======== read data set ========
-company_data = pd.read_csv("../assets/cleaned_reviews.csv")
+company_data = pd.read_csv("./assets/cleaned_reviews.csv")
 print(f"The clean dataset size is {len(company_data)}")
 
 # ======== Fill empty values with NaN ========
@@ -146,7 +146,7 @@ def show_factors_distribution():
 
 # ======== Correlation of happiness parameters with rating ========
 def show_happiness_correlation():
-    company_data_with_happiness = pd.read_csv("../assets/cleaned_reviews.csv")
+    company_data_with_happiness = pd.read_csv("./assets/cleaned_reviews.csv")
 
     company_data_with_happiness['happiness'] = company_data_with_happiness['happiness'].fillna(value = "{}")
     happiness = company_data_with_happiness.happiness.tolist()
