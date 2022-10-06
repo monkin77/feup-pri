@@ -64,10 +64,11 @@ def show_revenue_rating_correlation():
     plt.show()
 
 # ======== Correlation between rating factors ========
-def show_revenue_rating_correlation():
+def show_best_rating_correlation():
     plt.figure()
     sns.heatmap(company_data[['rating', 'ceo_approval', 'happiness', 'compensation/benefits', 
         'job_security/advancement', 'management', 'culture', 'work_life_balance']].corr(), xticklabels=True, yticklabels=True, vmin=0.5, vmax=1.0)
+    plt.title("Correlation between rating and other factors")
     plt.show()
 
 
@@ -83,7 +84,7 @@ def show_industry_ratings(positive):
         show_best_industry_ratings(rating_by_industry)
     else:
         show_worse_industry_ratings(rating_by_industry)
-    
+
 
 def show_best_industry_ratings(rating_by_industry):
     plt.figure()
@@ -94,6 +95,8 @@ def show_best_industry_ratings(rating_by_industry):
     plt.ylim(low, high)
     plt.xticks(rotation=90)
     plt.title("Best industries for work satisfaction")
+    plt.xlabel("Industry")
+    plt.ylabel("Rating")
     plt.show()
 
 def show_worse_industry_ratings(rating_by_industry):
@@ -105,6 +108,8 @@ def show_worse_industry_ratings(rating_by_industry):
     plt.ylim(low, high)
     plt.xticks(rotation=90)
     plt.title("Worse industries for work satisfaction")
+    plt.xlabel("Industry")
+    plt.ylabel("Rating")
     plt.show()
 
 
@@ -113,11 +118,13 @@ def show_ceo_approval_rating_correlation():
     plt.figure()
     sns.scatterplot(x="ceo_approval", y="rating", data=company_data)
     plt.title("Company Rating V.S CEO Approval")
+    plt.xlabel("CEO Approval (%)")
+    plt.ylabel("Rating")
     plt.show()
 
 
 # ======== Relation between the company rating and Compensation/Benefits ========
-def show_ceo_approval_rating_correlation():
+def show_compensation_rating_correlation():
     plt.figure()
     sns.scatterplot(x="compensation/benefits", y="rating", data=company_data)
     plt.title("Company Rating V.S Compensation/Benefits")
@@ -176,16 +183,45 @@ def show_ratings_distribution():
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
     
-    ax.hist(x=company_data['rating'], bins=40, histtype='bar')
+    ax.hist(x=company_data['rating'], bins=36, histtype='bar')
     ax.set_xlabel('Rating')
     ax.set_ylabel('Frequency')
 
     plt.show()
 
 
+# ======== Relation between the company rating and revenue ========
+def show_revenue_rating_correlation():
+    plt.figure()
+    sns.boxplot(x="revenue", y="rating", data=company_data)
+    plt.title("Company Rating V.S Revenue")
+    plt.xlabel("Revenue")
+    plt.ylabel("Rating")
+    plt.show()
+
+
+# ======== Relation between the company rating and ceo_approval ========
+def show_ceo_approval_rating_correlation():
+    plt.figure()
+    sns.boxplot(x=pd.cut(company_data["ceo_approval"], [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]), y="rating", data=company_data)
+    plt.title("Company Rating V.S CEO Approval")
+    plt.xlabel("CEO Approval (%)")
+    plt.ylabel("Rating")
+    plt.show()
+
+
+# ======== Custom Ratings Distribution ========
+def show_custom_ratings_distribution():
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    
+    ax.hist(x=company_data['custom_rating'], bins=36, histtype='bar')
+    ax.set_xlabel('Custom Rating')
+    ax.set_ylabel('Frequency')
+
+    plt.show()
+
+
 # ======== Call Method ========
-# show_all_correlation()
-# show_industry_ratings(False)
-# show_happiness_correlation()
-show_ratings_distribution()
+show_custom_ratings_distribution()
 
