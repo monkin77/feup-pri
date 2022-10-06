@@ -214,8 +214,6 @@ def show_ceo_approval_rating_correlation():
 ''' 
 - Analyze number of reviews
 - Wordclouds
-- Relate ceo_approval w/ ceo_count
-- Relate rating with revenue
 - Create new columns with the data we have
 '''
 
