@@ -14,7 +14,7 @@ def parseRatingObject(obj):
             objDict[key] = str(np.nan)
         else:
             objDict[key] = float(val)
-    return objDict
+    return json.dumps(objDict)
 
 def parseHappinessObject(obj):
     objDict = json.loads(obj)
@@ -23,7 +23,7 @@ def parseHappinessObject(obj):
             objDict[key] = str(np.nan)
         else:
             objDict[key] = int(val) / 20.0
-    return objDict
+    return json.dumps(objDict)
 
 def parseSalaryObject(obj):
     objDict = json.loads(obj)
@@ -33,7 +33,7 @@ def parseSalaryObject(obj):
         else:
             objDict[key] = salaryPerHour(val)
         
-    return objDict
+    return json.dumps(objDict)
 
 perHourRegex = r'\$(\d+[\.\,]\d+) per hour'
 perMonthRegex = r'\$(\d+[\.\,]\d+) per month'
@@ -99,11 +99,6 @@ company_data['ceo_count'] = pd.to_numeric(company_data['ceo_count'])
 company_data['ceo_approval'] = company_data['ceo_approval'].str.replace('%', '')
 company_data['ceo_approval'] = pd.to_numeric(company_data['ceo_approval'])
 
-company_data['ceo'] = [ {'count': company_data['ceo_count'].get(i), 'approval': company_data['ceo_approval'].get(i)} for i in range(len(company_data['name']))] 
-
-company_data = company_data.drop(['ceo_count'], axis=1)
-company_data = company_data.drop(['ceo_approval'], axis=1)
-
 # ======== Convert the ratings string object to proper JSON format ========
 company_data['ratings'] = company_data['ratings'].str.replace("'", "\"")
 company_data['ratings'] = company_data['ratings'].str.replace("–", "NaN")
@@ -160,13 +155,6 @@ company_data['interview_count'] = company_data['interview_count'].replace(np.nan
 company_data['interview_count'] = company_data['interview_count'].astype(int)
 # print(company_data['interview_count'])
 
-company_data['interview'] = [{
-        'experience:': company_data['interview_experience'].get(i), 
-        'difficulty': company_data['interview_difficulty'].get(i), 
-        'duration': company_data['interview_duration'].get(i),
-        'count': company_data['interview_count'].get(i)} 
-        for i in range(len(company_data['name']))]
-
 
 # ======== Create our own custom rating column ========
 # Need to convert into a pandas Series, otherwise it will assign values to Rows that are 'None' which I believe is the same as ignoring them
@@ -176,15 +164,39 @@ company_data['custom_rating'] = pd.Series(calculateCustomRating(company_data))
 # print(company_data['custom_rating'].describe())
 
 
+# TODO: Change the objects to JSON string and then convert to JSON object
+
+# ======== Export to CSV ========
+company_data.to_csv("./assets/cleaned_reviews.csv", index=False)
+
+
+# ======== Apply changes for JSON ========
+company_data['ceo'] = [ {'count': company_data['ceo_count'].get(i), 'approval': company_data['ceo_approval'].get(i)} for i in range(len(company_data['name']))] 
+company_data = company_data.drop(['ceo_count'], axis=1)
+company_data = company_data.drop(['ceo_approval'], axis=1)
+
+company_data['interview'] = [{
+        'experience:': company_data['interview_experience'].get(i), 
+        'difficulty': company_data['interview_difficulty'].get(i), 
+        'duration': company_data['interview_duration'].get(i),
+        'count': company_data['interview_count'].get(i)} 
+        for i in range(len(company_data['name']))]
 company_data = company_data.drop(['interview_experience'], axis=1)
 company_data = company_data.drop(['interview_difficulty'], axis=1)
 company_data = company_data.drop(['interview_duration'], axis=1)
 company_data = company_data.drop(['interview_count'], axis=1)
 
-# TODO: Change the objects to JSON string and then convert to JSON object
+# Change to JSON object strings to objects 
+company_data['ratings'] = company_data['ratings'].apply(parseRatingObject)
+#print(company_data['ratings'])
 
-# ======== Export to CSV ========
-company_data.to_csv("./assets/cleaned_reviews.csv", index=False)
+
+# ======== Convert the happiness string object to proper JSON format ========
+company_data['ratings'] = company_data['ratings'].apply(json.loads)
+company_data['happiness'] = company_data['happiness'].apply(json.loads)
+company_data['locations'] = company_data['locations'].apply(json.loads)
+company_data['roles'] = company_data['roles'].apply(json.loads)
+company_data['salary'] = company_data['salary'].apply(json.loads)
 
 # ======== Export to JSON ========
 company_data.to_json("./assets/cleaned_reviews.json", orient='index')

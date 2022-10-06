@@ -8,20 +8,17 @@ Calculates the mean of the values inside the JSON object
 @return NaN if the object is NaN, mean value otherwise
 '''
 def calcObjectMean(obj):
-  print("Deserializing " + str(obj))
+  #print("Deserializing " + str(obj))
   if (str(obj) == str(np.nan)):
     return np.nan
 
-  if (type(obj) == str):
-    objDict = json.loads(obj)
-  else:
-    objDict = obj
+  objDict = json.loads(obj)
 
   sum = 0
   for key, val in objDict.items():
       if ((not np.isnan(float(val))) and val != "nan"):
         sum += float(val)
-  meanValue = round(sum / len(obj), 2) if len(objDict) > 0 else np.nan
+  meanValue = round(sum / len(objDict), 2) if len(objDict) > 0 else np.nan
   return meanValue
 
 '''
