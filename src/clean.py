@@ -181,9 +181,14 @@ company_data = company_data.drop(['interview_difficulty'], axis=1)
 company_data = company_data.drop(['interview_duration'], axis=1)
 company_data = company_data.drop(['interview_count'], axis=1)
 
+# TODO: Change the objects to JSON string and then convert to JSON object
+
 # ======== Export to CSV ========
 company_data.to_csv("./assets/cleaned_reviews.csv", index=False)
 
 # ======== Export to JSON ========
 company_data.to_json("./assets/cleaned_reviews.json", orient='index')
+
+
+
 
