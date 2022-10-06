@@ -210,13 +210,18 @@ def show_ceo_approval_rating_correlation():
     plt.show()
 
 
-# ======== Possible TODO ========
-''' 
-- Analyze number of reviews
-- Wordclouds
-- Create new columns with the data we have
-'''
+# ======== Custom Ratings Distribution ========
+def show_custom_ratings_distribution():
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    
+    ax.hist(x=company_data['custom_rating'], bins=36, histtype='bar')
+    ax.set_xlabel('Custom Rating')
+    ax.set_ylabel('Frequency')
+
+    plt.show()
+
 
 # ======== Call Method ========
-show_ceo_approval_rating_correlation()
+show_custom_ratings_distribution()
 
