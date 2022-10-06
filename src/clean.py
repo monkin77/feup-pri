@@ -34,7 +34,7 @@ def parseRatingObject(obj):
             objDict[key] = str(np.nan)
         else:
             objDict[key] = float(val)
-    return json.dumps(objDict)
+    return objDict
 
 def parseHappinessObject(obj):
     objDict = json.loads(obj)
@@ -43,7 +43,7 @@ def parseHappinessObject(obj):
             objDict[key] = str(np.nan)
         else:
             objDict[key] = int(val) / 20.0
-    return json.dumps(objDict)
+    return objDict
 
 def parseSalaryObject(obj):
     objDict = json.loads(obj)
@@ -53,7 +53,7 @@ def parseSalaryObject(obj):
         else:
             objDict[key] = salaryPerHour(val)
         
-    return json.dumps(objDict)
+    return objDict
 
 perHourRegex = r'\$(\d+[\.\,]\d+) per hour'
 perMonthRegex = r'\$(\d+[\.\,]\d+) per month'
