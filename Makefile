@@ -38,15 +38,15 @@ analyze: setup analyzeOriginal analyzeStatistics analyzeWords analyzeGraphs
 analyzeOriginal: assets/cleaned_reviews.csv setup
 	$(python) src/analyzeOriginal.py
 
-analyzeStatistics: assets/cleaned_reviews.csv setup
+analyzeStatistics: assets/processed_reviews.csv setup
 	$(python) src/analyzeStatistics.py
 
-analyzeWords: assets/cleaned_reviews.csv setup
+analyzeWords: assets/processed_reviews.csv setup
 	$(python) src/analyzeWords.py
 
 analyzeGraphs: assets/processed_reviews.csv setup
-	# TODO: Change this name
-	$(python) src/dataAnalysis.py	
+	$(python) src/analyzeGraphs.py
+
 
 adhoc:
 	# This target is not part of the overall automation, but it can be useful to have something similar

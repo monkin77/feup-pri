@@ -1,4 +1,3 @@
 *.vscode
-assets/*.json
-assets/*.csv
+assets/
 __pycache__
