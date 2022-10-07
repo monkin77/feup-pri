@@ -1,6 +1,4 @@
-from cmath import isnan
 import json
-from tkinter import E
 import numpy as np
 
 '''

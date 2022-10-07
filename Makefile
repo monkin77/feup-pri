@@ -1,30 +1,25 @@
 # The all target helps automate the whole process: by running `make` from the command line, you can do everything in one go
 # You can define further targets that only execute smaller subsets of your data pipeline according to your needs
-all: clean collect process analyze
+all: setup clean collect process analyze
 
-.PHONY: collect processed analysis adhoc
+.PHONY: setup processed analysis adhoc
 
-# Step to download dependencies (python)
-setup: requirements.txt
+# Step to download dependencies (python packages)
+setup: requirements.txt assets/
+
+assets/:
 	pip install -r requirements.txt
+	mkdir -p assets
 
 # TODO: Check what the collect depends on
-collect:
-	# This target is usually associated with data collection
-	# This can involved scraping websites, downloading files from servers,
-	# or other similar operations.
-	# As best practice, ensure that all output data goes to a known location (e.g., here, data/)
-	# mkdir -p data/...
-	# In our case, the data is already in the desired path
+collect: setup assets/company_reviews.csv
 
-process: collect setup
-	# This target is reserved for data processing, which typically includes
-	# cleaning and refinement.
-	# As best practice, have multiple scripts to perform different (sub)steps
-	# You may even opt for several targets for bigger granularity
-	# (e.g., a process_cleaning and a process_refinement target)
-	# Moreover, ensure that data also goes to a known location for easier analysis
-	python src/clean.py
+assets/company_reviews.csv:
+	# TODO: Download the data from the server and place it in 'assets/company_reviews.csv'
+
+
+process: collect 
+	python3 src/clean.py
 
 analyze: setup analyzeOriginal analyzeProcessed
 	# This target is recommended to isolate all data analysis scripts.
@@ -34,12 +29,12 @@ analyze: setup analyzeOriginal analyzeProcessed
 	# mkdir -p analysis/...
 
 analyzeOriginal: setup
-	python src/analyzeOriginal.py
+	python3 src/analyzeOriginal.py
 
 analyzeProcessed: process
-	python src/analyzeWords.py
-	python src/analyzeStatistics.py
-	python src/dataAnalysis.py
+	python3 src/analyzeWords.py
+	python3 src/analyzeStatistics.py
+	python3 src/dataAnalysis.py
 
 adhoc:
 	# This target is not part of the overall automation, but it can be useful to have something similar
@@ -48,4 +43,4 @@ adhoc:
 	Rscript code/some_adhoc_script.R
 
 clean:
-	rm -rf data processed analysis
+	rm -rf assets data processed analysis
