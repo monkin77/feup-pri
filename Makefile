@@ -4,6 +4,11 @@ all: clean collect process analyze
 
 .PHONY: collect processed analysis adhoc
 
+# Step to download dependencies (python)
+setup: requirements.txt
+	pip install -r requirements.txt
+
+# TODO: Check what the collect depends on
 collect:
 	# This target is usually associated with data collection
 	# This can involved scraping websites, downloading files from servers,
@@ -12,22 +17,29 @@ collect:
 	# mkdir -p data/...
 	# In our case, the data is already in the desired path
 
-process:
+process: collect setup
 	# This target is reserved for data processing, which typically includes
 	# cleaning and refinement.
 	# As best practice, have multiple scripts to perform different (sub)steps
 	# You may even opt for several targets for bigger granularity
 	# (e.g., a process_cleaning and a process_refinement target)
 	# Moreover, ensure that data also goes to a known location for easier analysis
-	python3 src/clean.py
+	python src/clean.py
 
-analyze:
+analyze: setup analyzeOriginal analyzeProcessed
 	# This target is recommended to isolate all data analysis scripts.
 	# Once again, it is recommended to separate different types of analysis between scripts,
 	# which may span several languages. Diversity is key here so data can be better understood.
-	mkdir -p analysis/...
-	Rscript code/produce_some_plots.R
-	go run code/do_text_analysis.go
+	# TODO: Mkdirs and save stuff inside the folders
+	# mkdir -p analysis/...
+
+analyzeOriginal: setup
+	python src/analyzeOriginal.py
+
+analyzeProcessed: process
+	python src/analyzeWords.py
+	python src/analyzeStatistics.py
+	python src/dataAnalysis.py
 
 adhoc:
 	# This target is not part of the overall automation, but it can be useful to have something similar
