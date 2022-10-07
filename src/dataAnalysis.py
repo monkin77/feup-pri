@@ -7,7 +7,7 @@ import seaborn as sns
 
 
 # ======== read data set ========
-company_data = pd.read_csv("./assets/cleaned_reviews.csv")
+company_data = pd.read_csv("./assets/processed_reviews.csv")
 print(f"The clean dataset size is {len(company_data)}")
 
 # ======== Fill empty values with NaN ========
@@ -27,7 +27,12 @@ for i in range(len(ratings)):
     if (ratings[i] == str(np.nan)):
         rating_dict.append({})
     else:
-        rating_dict.append(eval(ratings[i]))
+        try:
+            rating_dict.append(eval(ratings[i]))
+        except:
+            # print("Found NaN in: ", ratings[i], " at index: ", i)
+            rating_dict.append({})
+        
     
 keys = ['Compensation/Benefits', 'Job Security/Advancement', 'Management', 'Culture', 'Work/Life Balance']
 new_keys = ['compensation/benefits', 'job_security/advancement', 'management', 'culture', 'work_life_balance']

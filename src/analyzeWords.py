@@ -5,7 +5,7 @@ from matplotlib import pyplot as plt
 from utils import calcObjectMean
 
 # ======== read data set ========
-company_data = pd.read_csv("./assets/cleaned_reviews.csv")
+company_data = pd.read_csv("./assets/processed_reviews.csv")
 
 wordcloud2 = WordCloud().generate(company_data['roles'].to_string())
 plt.imshow(wordcloud2)

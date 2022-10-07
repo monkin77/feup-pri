@@ -1,8 +1,7 @@
 import json
 import numpy as np
 import pandas as pd
-import re
-from utils import calculateCustomRating, parseSingleQuote
+from utils import parseSingleQuote
 
 def parseRatingObject(obj):
     # print("Deserializing " + obj)
@@ -42,13 +41,6 @@ company_data['ratings'] = company_data['ratings'].apply(parseRatingObject)
 #print(company_data['ratings'])
 
 
-# ======== Convert the happiness string object to proper JSON format ========
-company_data['happiness'] = company_data['happiness'].str.replace("'", "\"")
-company_data['happiness'] = company_data['happiness'].str.replace("–", "NaN")
-company_data['happiness'] = company_data['happiness'].apply(parseRatingObject)
-# print(pd.unique(company_data['happiness']))
-
-
 # ======== Convert the locations rating string object to proper JSON format ========
 company_data['locations'] = company_data['locations'].apply(parseSingleQuote)
 company_data['locations'] = company_data['locations'].str.replace("–", "NaN")
@@ -62,12 +54,6 @@ company_data['roles'] = company_data['roles'].str.replace("–", "NaN")
 company_data['roles'] = company_data['roles'].apply(parseRatingObject)
 # print(pd.unique(company_data['roles']))
 
-
-# ======== Convert the salary string object to proper JSON format ========
-company_data['salary'] = company_data['salary'].apply(parseSingleQuote)
-company_data['salary'] = company_data['salary'].str.replace("–", "NaN")
-company_data['salary'] = company_data['salary'].apply(parseRatingObject)
-# print(pd.unique(company_data['salary']))
 
 
 # ======== Export to CSV ========

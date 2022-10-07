@@ -8,7 +8,7 @@ def parseHappinessObject(obj):
     objDict = json.loads(obj)
     for key, val in objDict.items():
         if (val == 'NaN'):
-            objDict[key] = str(np.nan)
+            objDict[key] = np.nan
         else:
             objDict[key] = int(val) / 20.0
     return json.dumps(objDict)
@@ -17,7 +17,7 @@ def parseSalaryObject(obj):
     objDict = json.loads(obj)
     for key, val in objDict.items():
         if (val == 'NaN'):
-            objDict[key] = str(np.nan)
+            objDict[key] = np.nan
         else:
             objDict[key] = salaryPerHour(val)
         
@@ -69,32 +69,11 @@ company_data['ceo_count'] = pd.to_numeric(company_data['ceo_count'])
 company_data['ceo_approval'] = company_data['ceo_approval'].str.replace('%', '')
 company_data['ceo_approval'] = pd.to_numeric(company_data['ceo_approval'])
 
-# ======== Convert the ratings string object to proper JSON format ========
-company_data['ratings'] = company_data['ratings'].str.replace("'", "\"")
-company_data['ratings'] = company_data['ratings'].str.replace("–", "NaN")
-company_data['ratings'] = company_data['ratings'].apply(parseRatingObject)
-#print(company_data['ratings'])
-
-
 # ======== Convert the happiness string object to proper JSON format ========
 company_data['happiness'] = company_data['happiness'].str.replace("'", "\"")
 company_data['happiness'] = company_data['happiness'].str.replace("–", "NaN")
 company_data['happiness'] = company_data['happiness'].apply(parseHappinessObject)
 # print(pd.unique(company_data['happiness']))
-
-
-# ======== Convert the locations rating string object to proper JSON format ========
-company_data['locations'] = company_data['locations'].apply(parseSingleQuote)
-company_data['locations'] = company_data['locations'].str.replace("–", "NaN")
-company_data['locations'] = company_data['locations'].apply(parseRatingObject)
-# print(pd.unique(company_data['locations']))
-
-
-# ======== Convert the roles rating string object to proper JSON format ========
-company_data['roles'] = company_data['roles'].apply(parseSingleQuote)
-company_data['roles'] = company_data['roles'].str.replace("–", "NaN")
-company_data['roles'] = company_data['roles'].apply(parseRatingObject)
-# print(pd.unique(company_data['roles']))
 
 
 # ======== Convert the salary string object to proper JSON format ========
@@ -164,4 +143,5 @@ company_data['roles'] = company_data['roles'].apply(json.loads)
 company_data['salary'] = company_data['salary'].apply(json.loads)
 
 # ======== Export to JSON ========
+# TODO: Check if possible to use company names as keys
 company_data.to_json("./assets/processed_reviews.json", orient='index')

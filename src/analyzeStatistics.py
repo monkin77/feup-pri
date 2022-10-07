@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
-from utils import calcObjectMean, parseSingleQuote
+from utils import calcObjectMean
 
-company_data = pd.read_csv("./assets/cleaned_reviews.csv")
+company_data = pd.read_csv("./assets/processed_reviews.csv")
 
 # replace all values of company_data columns that are empty with {}
 # company_data = company_data.replace('{}', np.nan)
