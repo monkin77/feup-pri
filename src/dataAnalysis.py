@@ -4,8 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-
 # ======== read data set ========
 company_data = pd.read_csv("./assets/processed_reviews.csv")
 print(f"The clean dataset size is {len(company_data)}")
