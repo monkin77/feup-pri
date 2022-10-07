@@ -1,3 +1,4 @@
 *.vscode
-assets/cleaned_reviews.csv
+assets/*.json
+assets/*.csv
 __pycache__

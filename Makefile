@@ -4,23 +4,30 @@ all: setup clean collect process analyze
 
 .PHONY: setup processed analysis adhoc
 
-# Step to download dependencies (python packages)
+
+# ========== Setup ==========
 setup: requirements.txt assets/
 
 assets/:
 	pip install -r requirements.txt
 	mkdir -p assets
 
-# TODO: Check what the collect depends on
+# ========== Collect ==========
 collect: setup assets/company_reviews.csv
 
 assets/company_reviews.csv:
 	# TODO: Download the data from the server and place it in 'assets/company_reviews.csv'
 
+# ========== Process ==========
+process: collect assets/cleaned_reviews.csv assets/processed_reviews.csv
 
-process: collect 
+assets/cleaned_reviews.csv: 
 	python3 src/clean.py
 
+assets/processed_reviews.csv:
+	python3 src/processing.py
+
+# ========== Analyze ==========
 analyze: setup analyzeOriginal analyzeProcessed
 	# This target is recommended to isolate all data analysis scripts.
 	# Once again, it is recommended to separate different types of analysis between scripts,
