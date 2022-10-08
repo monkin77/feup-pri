@@ -143,5 +143,4 @@ company_data['roles'] = company_data['roles'].apply(json.loads)
 company_data['salary'] = company_data['salary'].apply(json.loads)
 
 # ======== Export to JSON ========
-# TODO: Check if possible to use company names as keys
-company_data.to_json("./assets/processed_reviews.json", orient='index')
+company_data.to_json("./assets/processed_reviews.json", orient='records', indent=2)
