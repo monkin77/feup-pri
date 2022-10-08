@@ -1,5 +1,3 @@
-import json
-from cv2 import rotate
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -140,8 +138,8 @@ def show_best_industry_ratings(rating_by_industry):
     plt.figure()
 
     plt.bar(rating_by_industry.index[0:5], rating_by_industry.tolist()[0:5])
-    low = 3.5
-    high = 4.2
+    low = 1.0
+    high = 5.0
     plt.ylim(low, high)
     #plt.xticks(rotate=90)
     plt.title("Best industries for work satisfaction")
@@ -157,8 +155,8 @@ def show_worse_industry_ratings(rating_by_industry):
     plt.figure()
 
     plt.bar(rating_by_industry.index[-5:], rating_by_industry.tolist()[-5:])
-    low = 3.0
-    high = 3.6
+    low = 1.0
+    high = 5.0
     plt.ylim(low, high)
     #plt.xticks(rotation=90)
     plt.title("Worse industries for work satisfaction")
