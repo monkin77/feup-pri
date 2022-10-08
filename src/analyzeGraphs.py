@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # ======== read data set ========
-company_data = pd.read_csv("./assets/processed_reviews.csv")
+company_data = pd.read_csv("../assets/processed_reviews.csv")
 
 # ======== Fill empty values with NaN ========
 company_data = company_data.fillna(np.nan)
@@ -47,9 +47,11 @@ save_imgs = True
 
 # ======== See Correlation between features ========
 def show_all_correlation():
+    labels = ['rating', 'approval', 'employees', 'revenue', 'happiness', 'benefits', 'security', 'manage', 'culture', 'balance']
     plt.figure()
     sns.heatmap(company_data[['rating', 'ceo_approval', 'employees', 'revenue', 'happiness', 'compensation/benefits', 
-        'job_security/advancement', 'management', 'culture', 'work_life_balance']].corr(), xticklabels=True, yticklabels=True, vmin=-1.0, vmax=1.0)
+        'job_security/advancement', 'management', 'culture', 'work_life_balance']].corr(), xticklabels=labels, yticklabels=labels, vmin=-1.0, vmax=1.0)
+    plt.title("Correlation between all the features")
 
     if (save_imgs):
         plt.savefig("./assets/images/all_correlation.png")
@@ -59,9 +61,14 @@ def show_all_correlation():
 
 # ======== Investigate correlation between company rating -> company size ========
 def show_employee_rating_correlation():
-    g = sns.catplot(x="employees", y="rating", data=company_data, kind="bar", palette="muted").set(title="Work Satisfaction V.S company size")
+    employee_labels = ["1", "2-10", "11-50", "51-200", "201-500", "501-1K", "1K-5K", "5K-10K", "10K+"]
+
+    g = sns.catplot(x="employees", y="rating", data=company_data, kind="bar", palette="muted").set(title="Rating V.S Company Size")
+    g.set_xticklabels(employee_labels)
+
     g.despine(left=True)
     g = g.set_ylabels("Reviews Rating")
+
 
     if (save_imgs):
         plt.savefig("./assets/images/employee_rating_correlation.png")
@@ -71,9 +78,28 @@ def show_employee_rating_correlation():
 
 # ======== Investigate correlation between company rating -> revenue ========
 def show_revenue_rating_correlation():
-    g = sns.catplot(x="revenue", y="rating", data=company_data, kind="bar", palette="muted").set(title="Work Satisfaction V.S company revenue")
+    revenue_labels = ["<1M", "2M-5M", "5M-25M", "25M-100M", "100M-500M", "500M-1B", "1B-5B", "5B-10B", "10B+"]
+
+    g = sns.catplot(x="revenue", y="rating", data=company_data, kind="bar", palette="muted").set(title="Company Rating V.S Revenue")
+    g.set_xticklabels(revenue_labels)
     g.despine(left=True)
     g = g.set_ylabels("Reviews Rating")
+
+    if (save_imgs):
+        plt.savefig("./assets/images/revenue_rating_correlation.png")
+    else:
+        plt.show()
+
+# ======== Relation between the company rating and revenue ========
+def show_boxplot_revenue_rating_correlation():
+    revenue_labels = ["<1M", "2M-5M", "5M-25M", "25M-100M", "100M-500M", "500M-1B", "1B-5B", "5B-10B", "10B+"]
+
+    plt.figure()
+    g = sns.boxplot(x="revenue", y="rating", data=company_data)
+    g.set_xticklabels(revenue_labels)
+    plt.title("Company Rating V.S Revenue")
+    plt.xlabel("Revenue")
+    plt.ylabel("Rating")
 
     if (save_imgs):
         plt.savefig("./assets/images/revenue_rating_correlation.png")
@@ -84,7 +110,7 @@ def show_revenue_rating_correlation():
 def show_best_rating_correlation():
     plt.figure()
     sns.heatmap(company_data[['rating', 'ceo_approval', 'happiness', 'compensation/benefits', 
-        'job_security/advancement', 'management', 'culture', 'work_life_balance']].corr(), xticklabels=True, yticklabels=True, vmin=0.5, vmax=1.0)
+        'job_security/advancement', 'management', 'culture', 'work_life_balance']].corr(), xticklabels=True, yticklabels=True, vmin=0, vmax=1.0)
     plt.title("Correlation between rating and other factors")
 
     if (save_imgs):
@@ -238,21 +264,6 @@ def show_ratings_distribution():
         plt.show()
 
 
-
-# ======== Relation between the company rating and revenue ========
-def show_revenue_rating_correlation():
-    plt.figure()
-    sns.boxplot(x="revenue", y="rating", data=company_data)
-    plt.title("Company Rating V.S Revenue")
-    plt.xlabel("Revenue")
-    plt.ylabel("Rating")
-
-    if (save_imgs):
-        plt.savefig("./assets/images/revenue_rating_correlation.png")
-    else:
-        plt.show()
-
-
 # ======== Relation between the company rating and ceo_approval ========
 def show_ceo_approval_rating_correlation():
     plt.figure()
@@ -283,6 +294,7 @@ def show_custom_ratings_distribution():
 
 
 # ======== Call Method ========
+save_imgs = False
 if (save_imgs):
     show_all_correlation()
     show_employee_rating_correlation()
@@ -295,7 +307,7 @@ if (save_imgs):
     show_factors_distribution()
     show_happiness_correlation()
     show_ratings_distribution()
-    show_revenue_rating_correlation()
+    show_boxplot_revenue_rating_correlation()
     show_ceo_approval_rating_correlation()
     show_custom_ratings_distribution()
 else:
