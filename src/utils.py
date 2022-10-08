@@ -36,7 +36,7 @@ def calculateCustomRating(company_data):
         hasRating = not np.isnan(rating)
         meanHappiness = calcObjectMean(happiness)
         meanRatings = calcObjectMean(ratings)
-        
+
 
         if (hasRating):
             curr_rating += float(rating)
