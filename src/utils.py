@@ -1,4 +1,3 @@
-from cmath import isnan
 import json
 import numpy as np
 
@@ -7,11 +6,12 @@ Calculates the mean of the values inside the JSON object
 @return NaN if the object is NaN, mean value otherwise
 '''
 def calcObjectMean(obj):
-  # print("Deserializing " + str(obj))
+  #print("Deserializing " + str(obj))
   if (str(obj) == str(np.nan)):
     return np.nan
 
   objDict = json.loads(obj)
+
   sum = 0
   for key, val in objDict.items():
       if ((not np.isnan(float(val))) and val != "nan"):
@@ -54,3 +54,23 @@ def calculateCustomRating(company_data):
         custom_ratings.append(round(curr_rating, 2) if curr_rating != 0 else np.nan)
     
     return custom_ratings
+
+# Converts the JSON string single quotes to double quotes
+def parseSingleQuote(obj):
+    newString = ""
+    for idx in range(0, len(obj)):
+        if obj[idx] == "'":
+            if (idx >= 1):
+                prevChar = obj[idx - 1]
+                if (prevChar in ["{", " "]):
+                    newString += "\""
+                    continue
+            if (idx < len(obj) - 1):
+                nextChar = obj[idx + 1]
+                if (nextChar in ["}", ",", ":"]):
+                    newString += "\""
+                    continue
+        newString += obj[idx]
+    
+    # print("parsed ->" + newString)
+    return newString
