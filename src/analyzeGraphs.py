@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # ======== read data set ========
-company_data = pd.read_csv("../assets/processed_reviews.csv")
+company_data = pd.read_csv("./assets/processed_reviews.csv")
 
 # ======== Fill empty values with NaN ========
 company_data = company_data.fillna(np.nan)
@@ -217,7 +217,7 @@ def show_factors_distribution():
 
 # ======== Correlation of happiness parameters with rating ========
 def show_happiness_correlation():
-    company_data_with_happiness = pd.read_csv("../assets/cleaned_reviews.csv")
+    company_data_with_happiness = pd.read_csv("./assets/cleaned_reviews.csv")
 
     company_data_with_happiness['happiness'] = company_data_with_happiness['happiness'].fillna(value = "{}")
     happiness = company_data_with_happiness.happiness.tolist()
@@ -318,5 +318,5 @@ if (save_imgs):
     show_boxplot_ceo_approval_rating_correlation()
     show_custom_ratings_distribution()
 else:
-    show_custom_ratings_distribution()
+    show_all_correlation()
 
