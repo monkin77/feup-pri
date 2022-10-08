@@ -8,7 +8,7 @@ all: setup collect process analyze
 # ========== Setup ==========
 setup: requirements.txt assets/
 
-assets/:
+assets/: requirements.txt
 	pip install -r requirements.txt
 	mkdir -p assets/images
 
@@ -16,7 +16,7 @@ assets/:
 # ========== Collect ==========
 collect: setup assets/company_reviews.csv
 
-assets/company_reviews.csv: setup
+assets/company_reviews.csv: assets/
 	curl -L -o assets/company_reviews.csv "https://drive.google.com/uc?export=download&id=$(fileid)"
 
 
