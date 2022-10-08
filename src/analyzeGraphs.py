@@ -42,7 +42,7 @@ company_data = company_data.drop(['ratings'], axis=1)
 # print("company_data new columns: ", company_data.columns)
 
 # ======== Boolean to save/show images ========
-save_imgs = False
+save_imgs = True
 
 
 # ======== See Correlation between features ========
