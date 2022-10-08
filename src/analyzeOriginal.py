@@ -1,8 +1,5 @@
 import numpy as np
 import pandas as pd
-from wordcloud import WordCloud
-from matplotlib import pyplot as plt
-from utils import calcObjectMean
 
 # ======== read data set ========
 company_data = pd.read_csv("./assets/company_reviews.csv")
