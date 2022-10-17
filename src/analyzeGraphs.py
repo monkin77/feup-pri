@@ -261,7 +261,7 @@ def show_ratings_distribution():
     
     ax.hist(x=company_data['rating'], bins=36, histtype='bar')
     ax.set_xlabel('Rating')
-    ax.set_ylabel('Frequency')
+    ax.set_ylabel('No. of Reviews')
 
     if (save_imgs):
         plt.savefig("./assets/images/ratings_distribution.png")
@@ -316,5 +316,5 @@ if (save_imgs):
     show_boxplot_ceo_approval_rating_correlation()
     show_custom_ratings_distribution()
 else:
-    show_all_correlation()
+    show_ratings_distribution()
 
