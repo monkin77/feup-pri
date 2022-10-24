@@ -1,7 +1,7 @@
 {
 	"add-field-type": [
         {
-            "name":"courseTitle",
+            "name":"companyName",
             "class":"solr.TextField",
             "indexAnalyzer":{
                 "tokenizer":{
@@ -25,8 +25,8 @@
     ],
     "add-field": [
         {
-            "name": "title",
-            "type": "courseTitle",
+            "name": "name",
+            "type": "companyName",
             "indexed": true
         }
     ]
