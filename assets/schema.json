@@ -21,6 +21,80 @@
                     {"class":"solr.LowerCaseFilterFactory"}
                 ]
             }
+        },
+        {
+            "name": "ratingValue",
+            "class":"solr.DoublePointField"
+        },
+        {
+            "name": "enumerable",
+            "class":"solr.IntPointField"
+        },
+        {
+            "name":"companyDescription",
+            "class":"solr.TextField",
+            "indexAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            },
+            "queryAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            }
+        },
+        {
+            "name":"companyHeadquarters",
+            "class":"solr.TextField",
+            "indexAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            },
+            "queryAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            }
+        },
+        {
+            "name":"companyIndustry",
+            "class":"solr.TextField",
+            "indexAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            },
+            "queryAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            }
         }
     ],
     "add-field": [
@@ -28,6 +102,34 @@
             "name": "name",
             "type": "companyName",
             "indexed": true
+        },
+        {
+            "name": "rating",
+            "type": "ratingValue"
+        },
+        {
+            "name": "custom_rating",
+            "type": "ratingValue"
+        },
+        {
+            "name": "description",
+            "type": "companyDescription"
+        },
+        {
+            "name": "headquarters",
+            "type": "companyHeadquarters"
+        },
+        {
+            "name": "industry",
+            "type": "companyIndustry"
+        },
+        {
+            "name": "employees",
+            "type": "enumerable"
+        },
+        {
+            "name": "revenue",
+            "type": "enumerable"
         }
     ]
 }
