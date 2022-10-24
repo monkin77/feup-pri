@@ -1,6 +1,6 @@
 FROM solr:8.10
 
-COPY assets/processed_reviews.json /data/reviews.json
+COPY assets/reviews.json /data/reviews.json
 
 COPY assets/schema.json /data/schema.json
 
