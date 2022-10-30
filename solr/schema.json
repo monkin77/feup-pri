@@ -10,9 +10,11 @@
                 "filters":[
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
                     {"class":"solr.LowerCaseFilterFactory"},
+                    {"class":"solr.PorterStemFilterFactory"},
                     {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
                     {"class":"solr.FlattenGraphFilterFactory"},
+                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"},
                     {"class": "solr.EdgeNGramFilterFactory", "maxGramSize": "10", "minGramSize": "2"}
                 ]
             },
@@ -23,8 +25,24 @@
                 "filters":[
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
                     {"class":"solr.LowerCaseFilterFactory"},
+                    {"class":"solr.PorterStemFilterFactory"},
                     {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
+                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"},
+                    {"class": "solr.EdgeNGramFilterFactory", "maxGramSize": "10", "minGramSize": "2"}
+                ]
+            }
+        },
+        {
+            "name":"categoricText",
+            "class":"solr.TextField",
+            "analyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"},
                     {"class": "solr.EdgeNGramFilterFactory", "maxGramSize": "10", "minGramSize": "2"}
                 ]
             }
@@ -49,7 +67,7 @@
     "add-field": [
         {
             "name": "name",
-            "type": "regularText",
+            "type": "categoricText",
             "indexed": true,
             "stored": true
         },
@@ -79,13 +97,13 @@
         },
         {
             "name": "headquarters",
-            "type": "regularText",
+            "type": "categoricText",
             "indexed": true,
             "stored": true
         },
         {
             "name": "industry",
-            "type": "regularText",
+            "type": "categoricText",
             "indexed": true,
             "stored": true
         },
