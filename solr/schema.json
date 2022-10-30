@@ -43,85 +43,124 @@
         {
             "name": "name",
             "type": "regularText",
-            "indexed": true
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "rating",
-            "type": "ratingValue"
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "custom_rating",
-            "type": "ratingValue"
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "reviews",
-            "type": "countable"
+            "type": "countable",
+            "indexed": false,
+            "stored": true
         },
         {
             "name": "description",
-            "type": "regularText"
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "headquarters",
-            "type": "regularText"
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "industry",
-            "type": "regularText"
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "employees",
-            "type": "enumerable"
+            "type": "enumerable",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "revenue",
-            "type": "enumerable"
+            "type": "enumerable",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "ceo.count",
-            "type": "countable"
+            "type": "countable",
+            "indexed": false,
+            "stored": true
         },
         {
             "name": "ceo.approval",
-            "type": "percentage"
+            "type": "percentage",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "interview.experience",
-            "type": "regularText"
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "interview.difficulty",
-            "type": "regularText"
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "interview.duration",
-            "type": "regularText"
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "interview.count",
-            "type": "countable"
+            "type": "countable",
+            "indexed": false,
+            "stored": true
         }
     ],
     "add-dynamic-field": [
         {
             "name": "happiness.*",
-            "type": "ratingValue"
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "ratings.*",
-            "type": "ratingValue"
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "locations.*",
-            "type": "ratingValue"
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "roles.*",
-            "type": "ratingValue"
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
         },
         {
             "name": "salary.*",
-            "type": "ratingValue"
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
         }
     ]
 }
