@@ -5,6 +5,12 @@ precreate-core reviews
 # Start Solr in background mode so we can use the API to upload the schema
 solr start
 
+# Wait for solr to properly start
+sleep 2
+
+cp /data/stopwords.txt /var/solr/data/reviews/conf
+cp /data/synonyms.txt /var/solr/data/reviews/conf
+
 # Schema definition via API
 curl -X POST -H 'Content-type:application/json' \
     --data-binary @/data/schema.json \
