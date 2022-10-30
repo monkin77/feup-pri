@@ -125,7 +125,7 @@ company_data = company_data.drop(['ceo_count'], axis=1)
 company_data = company_data.drop(['ceo_approval'], axis=1)
 
 company_data['interview'] = [{
-        'experience:': company_data['interview_experience'].get(i), 
+        'experience': company_data['interview_experience'].get(i), 
         'difficulty': company_data['interview_difficulty'].get(i), 
         'duration': company_data['interview_duration'].get(i),
         'count': company_data['interview_count'].get(i)} 

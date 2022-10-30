@@ -1,7 +1,7 @@
 {
 	"add-field-type": [
         {
-            "name":"companyName",
+            "name":"regularText",
             "class":"solr.TextField",
             "indexAnalyzer":{
                 "tokenizer":{
@@ -27,80 +27,22 @@
             "class":"solr.DoublePointField"
         },
         {
-            "name": "enumerable",
+            "name": "percentage",
+            "class":"solr.DoublePointField"
+        },
+        {
+            "name": "countable",
             "class":"solr.IntPointField"
         },
         {
-            "name":"companyDescription",
-            "class":"solr.TextField",
-            "indexAnalyzer":{
-                "tokenizer":{
-                    "class":"solr.StandardTokenizerFactory"
-                },
-                "filters":[
-                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"}
-                ]
-            },
-            "queryAnalyzer":{
-                "tokenizer":{
-                    "class":"solr.StandardTokenizerFactory"
-                },
-                "filters":[
-                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"}
-                ]
-            }
-        },
-        {
-            "name":"companyHeadquarters",
-            "class":"solr.TextField",
-            "indexAnalyzer":{
-                "tokenizer":{
-                    "class":"solr.StandardTokenizerFactory"
-                },
-                "filters":[
-                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"}
-                ]
-            },
-            "queryAnalyzer":{
-                "tokenizer":{
-                    "class":"solr.StandardTokenizerFactory"
-                },
-                "filters":[
-                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"}
-                ]
-            }
-        },
-        {
-            "name":"companyIndustry",
-            "class":"solr.TextField",
-            "indexAnalyzer":{
-                "tokenizer":{
-                    "class":"solr.StandardTokenizerFactory"
-                },
-                "filters":[
-                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"}
-                ]
-            },
-            "queryAnalyzer":{
-                "tokenizer":{
-                    "class":"solr.StandardTokenizerFactory"
-                },
-                "filters":[
-                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"}
-                ]
-            }
+            "name": "enumerable",
+            "class":"solr.IntPointField"
         }
     ],
     "add-field": [
         {
             "name": "name",
-            "type": "companyName",
+            "type": "regularText",
             "indexed": true
         },
         {
@@ -112,16 +54,20 @@
             "type": "ratingValue"
         },
         {
+            "name": "reviews",
+            "type": "countable"
+        },
+        {
             "name": "description",
-            "type": "companyDescription"
+            "type": "regularText"
         },
         {
             "name": "headquarters",
-            "type": "companyHeadquarters"
+            "type": "regularText"
         },
         {
             "name": "industry",
-            "type": "companyIndustry"
+            "type": "regularText"
         },
         {
             "name": "employees",
@@ -130,6 +76,52 @@
         {
             "name": "revenue",
             "type": "enumerable"
+        },
+        {
+            "name": "ceo.count",
+            "type": "countable"
+        },
+        {
+            "name": "ceo.approval",
+            "type": "percentage"
+        },
+        {
+            "name": "interview.experience",
+            "type": "regularText"
+        },
+        {
+            "name": "interview.difficulty",
+            "type": "regularText"
+        },
+        {
+            "name": "interview.duration",
+            "type": "regularText"
+        },
+        {
+            "name": "interview.count",
+            "type": "countable"
+        }
+    ],
+    "add-dynamic-field": [
+        {
+            "name": "happiness.*",
+            "type": "ratingValue"
+        },
+        {
+            "name": "ratings.*",
+            "type": "ratingValue"
+        },
+        {
+            "name": "locations.*",
+            "type": "ratingValue"
+        },
+        {
+            "name": "roles.*",
+            "type": "ratingValue"
+        },
+        {
+            "name": "salary.*",
+            "type": "ratingValue"
         }
     ]
 }
