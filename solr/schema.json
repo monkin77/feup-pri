@@ -14,8 +14,7 @@
                     {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
                     {"class":"solr.FlattenGraphFilterFactory"},
-                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"},
-                    {"class": "solr.EdgeNGramFilterFactory", "maxGramSize": "10", "minGramSize": "2"}
+                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"}
                 ]
             },
             "queryAnalyzer":{
@@ -28,8 +27,7 @@
                     {"class":"solr.PorterStemFilterFactory"},
                     {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
-                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"},
-                    {"class": "solr.EdgeNGramFilterFactory", "maxGramSize": "10", "minGramSize": "2"}
+                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"}
                 ]
             }
         },
@@ -42,8 +40,7 @@
                 },
                 "filters":[
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
-                    {"class":"solr.LowerCaseFilterFactory"},
-                    {"class": "solr.EdgeNGramFilterFactory", "maxGramSize": "10", "minGramSize": "2"}
+                    {"class":"solr.LowerCaseFilterFactory"}
                 ]
             }
         },
