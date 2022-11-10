@@ -1,3 +1,6 @@
 *.vscode
-assets/
+assets/*
 __pycache__
+!assets/schema.json
+!assets/processed_reviews.json
+!assets/reviews.json

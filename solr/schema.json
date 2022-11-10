@@ -1,0 +1,188 @@
+{
+	"add-field-type": [
+        {
+            "name":"regularText",
+            "class":"solr.TextField",
+            "indexAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"},
+                    {"class":"solr.PorterStemFilterFactory"},
+                    {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
+                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
+                    {"class":"solr.FlattenGraphFilterFactory"},
+                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"}
+                ]
+            },
+            "queryAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"},
+                    {"class":"solr.PorterStemFilterFactory"},
+                    {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
+                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
+                    {"class": "solr.RemoveDuplicatesTokenFilterFactory"}
+                ]
+            }
+        },
+        {
+            "name":"categoricText",
+            "class":"solr.TextField",
+            "analyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            }
+        },
+        {
+            "name": "ratingValue",
+            "class":"solr.DoublePointField"
+        },
+        {
+            "name": "percentage",
+            "class":"solr.DoublePointField"
+        },
+        {
+            "name": "countable",
+            "class":"solr.IntPointField"
+        },
+        {
+            "name": "enumerable",
+            "class":"solr.IntPointField"
+        }
+    ],
+    "add-field": [
+        {
+            "name": "name",
+            "type": "categoricText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "rating",
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "custom_rating",
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "reviews",
+            "type": "countable",
+            "indexed": false,
+            "stored": true
+        },
+        {
+            "name": "description",
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "headquarters",
+            "type": "categoricText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "industry",
+            "type": "categoricText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "employees",
+            "type": "enumerable",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "revenue",
+            "type": "enumerable",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "ceo.count",
+            "type": "countable",
+            "indexed": false,
+            "stored": true
+        },
+        {
+            "name": "ceo.approval",
+            "type": "percentage",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "interview.experience",
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "interview.difficulty",
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "interview.duration",
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "interview.count",
+            "type": "countable",
+            "indexed": false,
+            "stored": true
+        }
+    ],
+    "add-dynamic-field": [
+        {
+            "name": "happiness.*",
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "ratings.*",
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "locations.*",
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "roles.*",
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "salary.*",
+            "type": "ratingValue",
+            "indexed": true,
+            "stored": true
+        }
+    ]
+}
