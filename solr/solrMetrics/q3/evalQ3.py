@@ -7,7 +7,6 @@ import pandas as pd
 import requests
 from sklearn.metrics import PrecisionRecallDisplay
 
-
 ### First step: read the qrels file and fetch query results from Solr's REST API 
 QRELS_FILE = "results.txt"
 # get here the url with edisMax
