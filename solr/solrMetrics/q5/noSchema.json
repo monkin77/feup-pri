@@ -1,0 +1,34 @@
+{
+  "responseHeader":{
+    "status":0,
+    "QTime":19,
+    "params":{
+      "q":"\"Health Technology\"~20\nTechnology",
+      "defType":"edismax",
+      "indent":"true",
+      "qf":"name industry rating description",
+      "fl":"* score",
+      "start":"0",
+      "q.op":"AND",
+      "_":"1668337947107"}},
+  "response":{"numFound":1,"start":0,"maxScore":1.308553,"numFoundExact":true,"docs":[
+      {
+        "name":["Penn State Hershey Rehabilitation Hospital"],
+        "rating":[4.4],
+        "reviews":[12],
+        "description":["A partnership of Penn State Health Milton S. Hershey Medical Center and Select Medical, Penn State Health Rehabilitation Hospital is located at 1135 Old West Chocolate Avenue, in Derry Township, just a few short miles from the Medical Center.\n\nOur 76-bed hospital — with 66 adult beds and 10 pediatric beds — offers the latest technology and medical equipment, and high quality acute inpatient rehabilitation care.\n\nPenn State Health Rehabilitation Hospital provides 24/7 physician and rehabilitation nursing care, and evidence-based physical, occupational and speech therapy to help restore patient strength, mobility and independence in daily living activities.\n\nOwn Your Future\nWhy work with us? Because we offer more than just a job. On our team, you will:\n\n• Build meaningful relationships with patients and their families during each patient’s rehabilitation\njourney.\n• Collaborate with an amazing group of nurses, therapists, physicians and support staff to help patients\nregain independence.\n• Be challenged to learn, problem solve and grow professionally.\n• Be a valued member of the Select Medical family of brands, a nationwide leader in post-acute care. – less"],
+        "ratings.Management":[3.9],
+        "ratings.Culture":[4.2],
+        "headquarters":["Hershey, Pennsylvania"],
+        "employees":[9.0],
+        "industry":["Healthcare"],
+        "custom_rating":[4.21],
+        "ceo.count":[0],
+        "interview.count":[0],
+        "id":"11db4fdd-6091-4afc-9b5c-4298cba427d5",
+        "ratings.Work_Life_Balance":[3.8],
+        "ratings.Compensation_Benefits":[3.8],
+        "ratings.Job_Security_Advancement":[3.7],
+        "_version_":1749383651706011648,
+        "score":1.308553}]
+  }}

@@ -9,7 +9,7 @@ from sklearn.metrics import PrecisionRecallDisplay
 
 
 ### First step: read the qrels file and fetch query results from Solr's REST API 
-QRELS_FILE = "results.txt"
+QRELS_FILE = "relevantResults.txt"
 # get here the url with edisMax
 QUERY_URL = "http://localhost:8983/solr/reviews/select?_=1668280615617&defType=edismax&fl=*+score&fq=employees:%5B8+TO+*%5D&indent=true&q=Financial+Technology&q.op=OR&qf=name+industry+description&rows=10&start=0"
 # get here the url with edisMax and weights
@@ -79,7 +79,7 @@ for results, color in zip(results, colors):
             doc 
             for doc in results[:n] 
             if (i != 2 and doc['name'] in relevant) or (i == 2 and doc['name'][0] in relevant)
-        ])/n
+        ])/len(results)
 
     @metric
     def r10(results, relevant, n=10):

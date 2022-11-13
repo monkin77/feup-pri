@@ -11,9 +11,9 @@ from sklearn.metrics import PrecisionRecallDisplay
 ### First step: read the qrels file and fetch query results from Solr's REST API 
 QRELS_FILE = "relevantResults.txt"
 # get here the url with edisMax
-QUERY_URL = "http://localhost:8983/solr/reviews/select?_=1668278951176&defType=edismax&fl=*+score&fq=rating:+%5B4+TO+*%5D&indent=true&q=Telecommunications&q.op=AND&qf=name+industry+description&rows=10&start=0"
+QUERY_URL = "http://localhost:8983/solr/reviews/select?_=1668337947107&defType=edismax&fl=*+score&indent=true&q=%22Health+Technology%22~20%0ATechnology&q.op=AND&qf=name+industry+rating+description&start=0"
 # get here the url with edisMax and weights
-QUERY_URL_WEIGHT = "http://localhost:8983/solr/reviews/select?_=1668278951176&defType=edismax&fl=*+score&fq=rating:+%5B4+TO+*%5D&indent=true&q=Telecommunications&q.op=AND&qf=name+industry%5E2+description&rows=10&start=0"
+QUERY_URL_WEIGHT = "http://localhost:8983/solr/reviews/select?_=1668337947107&defType=edismax&fl=*+score&indent=true&q=%22Health+Technology%22~20%0ATechnology%5E2&q.op=AND&qf=name+industry%5E1.5+rating+description&start=0"
 
 # Read qrels to extract relevant documents
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))
@@ -51,7 +51,7 @@ for results, color in zip(results, colors):
         index = 0
         for res in results:
             if (i != 2 and res['name'] in relevant) or (i == 2 and res['name'][0] in relevant):
-                relevant_index.append(index)
+              relevant_index.append(index)
             index = index + 1
 
         if len(relevant_index) == 0:
@@ -174,6 +174,6 @@ handles, labels = disp.ax_.get_legend_handles_labels()
 
 # set the legend and the axes
 ax.legend(handles=handles, labels=labels, loc="best")
-ax.set_title("Precision-Recall curve of information retrieval 2")
+ax.set_title("Precision-Recall curve of information retrieval 4")
 
 plt.savefig('precision_recall.png')
