@@ -7,6 +7,7 @@ import pandas as pd
 import requests
 from sklearn.metrics import PrecisionRecallDisplay
 
+USE_INTERPOLATION = True
 
 ### First step: read the qrels file and fetch query results from Solr's REST API 
 QRELS_FILE = "relevantResults.txt"
@@ -145,8 +146,9 @@ for results, color in zip(results, colors):
     precision_recall_match = {k: v for k,v in zip(recall_values, precision_values)}
 
     # Extend recall_values to include traditional steps for a better curve (0.1, 0.2 ...)
-    recall_values.extend([step for step in np.arange(0.1, 1.1, 0.1) if step not in recall_values])
-    recall_values = sorted(set(recall_values))
+    if USE_INTERPOLATION:
+        recall_values.extend([step for step in np.arange(0.1, 1.1, 0.1) if step not in recall_values])
+        recall_values = sorted(set(recall_values))
 
     # Extend matching dict to include these new intermediate steps
     for idx, step in enumerate(recall_values):
@@ -174,6 +176,10 @@ handles, labels = disp.ax_.get_legend_handles_labels()
 
 # set the legend and the axes
 ax.legend(handles=handles, labels=labels, loc="best")
-ax.set_title("Precision-Recall curve of information retrieval 1")
 
-plt.savefig('precision_recall.png')
+if USE_INTERPOLATION:
+    ax.set_title("Interpolated Precision-Recall curve of information retrieval 1")
+    plt.savefig('precision_recall_interpolation.png')
+else:
+    ax.set_title("Precision-Recall curve of information retrieval 1")
+    plt.savefig('precision_recall.png')
