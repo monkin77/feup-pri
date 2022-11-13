@@ -1,0 +1,14 @@
+{
+  "responseHeader":{
+    "status":0,
+    "QTime":76,
+    "params":{
+      "q":"Sport",
+      "defType":"edismax",
+      "indent":"true",
+      "qf":"name",
+      "start":"0",
+      "q.op":"OR",
+      "_":"1668355769457"}},
+  "response":{"numFound":0,"start":0,"numFoundExact":true,"docs":[]
+  }}
