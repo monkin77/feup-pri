@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Typography } from "@mui/material";
-import { TodoCard } from "../components/TodoCard";
 import { Item, itemStates } from "../model/Item";
 import { setDone } from "../controller/todoItems";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Search as SearchIcon } from "@mui/icons-material";
+import { Stylesheet } from "../styles/stylesheet";
 
 const styles = {
     container: {
@@ -10,14 +11,22 @@ const styles = {
         minHeight: "100vh",
         backgroundColor: "lightBlue",
         boxSizing: "border-box",
+        position: "relative",
+        height: "100%",
     },
-    column: {
-        width: "85%",
-        margin: "auto",
-        backgroundColor: "lightGrey",
-        padding: "2rem",
-        borderRadius: "1rem",
-        minHeight: "50vh",
+    centered: {
+        display: "flex",
+        flex: 1,
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+    },
+    title: {
+        fontSize: "4rem",
+    },
+    searchBar: {
+        width: "40%",
     },
 };
 
@@ -25,11 +34,6 @@ const dummyItems = [
     new Item("task 1", itemStates.todo),
     new Item("task 2", itemStates.done),
 ];
-
-// Optional TODO: Make The App pretty *-*
-
-/* Optional TODO: Create an app global state (redux) containing a 'loading' flag. 
-While backend requests are being processed, show the loading indicator in the UI */
 
 export const HomePage = () => {
     /**
@@ -42,49 +46,35 @@ export const HomePage = () => {
         update the items variable with the result */
     }, []);
 
-    const handleDone = async (item) => {
-        const result = await setDone(item);
-
-        if (!result.ok) {
-            // Failed request
-            console.log("Error setting item to done.");
-            return;
-        }
-
-        // Updating state to Done in the UI
-        const newItems = items.map((currItem) => {
-            if (currItem.id === item.id) currItem.state = itemStates.done;
-            return currItem;
-        });
-        setItems(newItems);
+    const handleSubmit = (event) => {
+        console.log(event);
+        event.preventDefault();
     };
 
     return (
         <div style={styles.container}>
-            <h1>Indwish</h1>
-            <Grid container padding={2}>
-                <Grid item xs={12} md={6} style={styles.grid} paddingBottom={3}>
-                    <div style={styles.column}>
-                        <Typography variant="h2">Todo</Typography>
-
-                        <TodoCard
-                            title="TODO"
-                            items={
-                                items /* TODO nº3: filter the items with state TODO */
-                            }
-                            handleDone={handleDone}
-                        />
-                    </div>
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                    <div style={styles.column}>
-                        <Typography variant="h2">Done</Typography>
-
-                        {/* TODO nº4: Add Card for Tasks done  */}
-                    </div>
-                </Grid>
-            </Grid>
+            <div style={styles.centered}>
+                <h1 style={styles.title}>IndWish</h1>
+                <form style={styles.searchBar} onSubmit={handleSubmit}>
+                    <TextField
+                        id="searchBar"
+                        label="Search for Companies"
+                        variant="outlined"
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton onClick={handleSubmit}>
+                                        <SearchIcon />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                        style={Stylesheet.fullWidth}
+                        placeholder="Search"
+                        color="primary"
+                    />
+                </form>
+            </div>
         </div>
     );
 };
