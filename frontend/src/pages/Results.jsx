@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
-import { Stylesheet } from "../styles/stylesheet";
+import { CircularProgress, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
+import {querySolr} from '../controller/solr.js';
 
 const styles = {
     container: {
@@ -36,8 +36,10 @@ export const ResultsPage = () => {
         fetchResults();
     }, []);
 
-    const fetchResults = () => {
-
+    const fetchResults = async () => {
+        console.log("Fetching results for: " + searchValue);
+        const res = await querySolr(searchValue);
+        console.log(res);
     }
 
     return (
