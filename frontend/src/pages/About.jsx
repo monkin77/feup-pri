@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 import { Stylesheet } from "../styles/stylesheet";
-import {useNavigate} from 'react-router-dom'
 
 const styles = {
     container: {
@@ -29,12 +28,12 @@ const styles = {
     },
 };
 
-export const HomePage = () => {
+export const AboutPage = () => {
     const [search, setSearch] = useState("");
-    const navigate = useNavigate();
 
     useEffect(() => {
-        
+        /* TODO nº2: Fetch items from the backend and 
+        update the items variable with the result */
     }, []);
 
     const onChangeSearch = (event) => {
@@ -44,7 +43,7 @@ export const HomePage = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         
-        navigate("/results", { state: {searchValue: search} });
+        console.log("showing results for: ", search);
     };
 
     return (
