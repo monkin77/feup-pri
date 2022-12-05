@@ -40,6 +40,7 @@ export const ResultsPage = () => {
         console.log("Fetching results for: " + searchValue);
         const res = await querySolr(searchValue);
         console.log(res);
+        setLoading(false);
     }
 
     return (
