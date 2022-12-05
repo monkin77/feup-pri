@@ -8,12 +8,12 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8983"
 export const querySolr = async(query) => {
     try {
         // TODO: Additional params  &qf=name+industry+description&rows=10
-        const response = await fetch(`${BACKEND_URL}/solr/reviews/select?_=1668256462851&defType=edismax&indent=true&q=${query}&q.op=OR`, {
+        const response = await fetch(`${BACKEND_URL}/solr/reviews/select?defType=edismax&indent=true&q.op=OR&q=${query}&qf=name%20industry%20description&rows=10&start=0`, {
             method: 'GET',
         });
 
         if (!response.ok) {
-            return { ok: false }
+            return { ok: false, err: response };
         }
 
         let data = await response.json();
