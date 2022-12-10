@@ -16,6 +16,40 @@ curl -X POST -H 'Content-type:application/json' \
     --data-binary @/data/schema.json \
     http://localhost:8983/solr/reviews/schema
 
+# Add suggester component
+curl -X POST -H 'Content-type:application/json'  -d '{
+  "add-searchcomponent": {
+    "name": "suggest",
+    "class": "solr.SuggestComponent",
+    "suggester": {
+        "name": "reviewsSuggester",
+        "lookupImpl": "FreeTextLookupFactory",
+        "dictionaryImpl": "DocumentDictionaryFactory",
+        "field": "description_suggest",
+        "suggestFreeTextAnalyzerFieldType": "basicText",
+        "exactMatchFirst": "true",
+        "buildOnStartup": "true"
+    }
+  }
+}' http://localhost:8983/solr/reviews/config
+
+# Add suggester request handler
+curl -X POST -H 'Content-type:application/json'  -d '{
+  "add-requesthandler": {
+    "name": "/suggest",
+        "class": "solr.SearchHandler",
+        "startup": "lazy",
+        "defaults": {
+            "suggest": true,
+            "suggest.count": 10,
+            "suggest.dictionary": "reviewsSuggester"
+        },
+        "components": [
+            "suggest"
+        ]
+  }
+}' http://localhost:8983/solr/reviews/config
+
 # Populate collection
 bin/post -c reviews /data/reviews.json
 
