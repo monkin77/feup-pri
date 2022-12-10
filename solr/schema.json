@@ -70,7 +70,8 @@
         },
         {
             "name": "enumerable",
-            "class":"solr.IntPointField"
+            "class":"solr.IntPointField",
+            "docValues":true
         }
     ],
     "add-field": [
