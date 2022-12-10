@@ -13,6 +13,6 @@ docker run --name solr-pri-container -p 8983:8983 -it solr-pri
 
 **suggester**: http://localhost:8983/solr/reviews/suggest?q.op=AND&q=tech
 
-**spellchecker**:
+**spellchecker**: http://localhost:8983/solr/reviews/spellcheck?q=teck
 
 **faceting**:
