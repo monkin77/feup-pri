@@ -23,6 +23,7 @@ const styles = {
     },
     title: {
         fontSize: "4rem",
+        fontFamily: "Roboto",
     },
     searchBar: {
         width: "40%",
