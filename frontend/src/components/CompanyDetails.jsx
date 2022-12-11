@@ -1,8 +1,9 @@
 import React from "react";
 import { Divider, Grid, Typography } from "@mui/material";
 import { RatingComponent } from "./RatingComponent";
-import { getHappinessRatings, getPerksRatings, getRolesRatings } from "../utils/utils";
+import { getHappinessRatings, getPerksRatings, getRolesRatings, getRolesSalary } from "../utils/utils";
 import { Collapsable } from "./Collapsable";
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 const styles = {
     container: {
@@ -59,6 +60,13 @@ const styles = {
         boxShadow: "none",
         padding: 0,
     },
+    salaryItem: {
+        fontSize: 18,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center", 
+        marginBottom: 5
+    },
 };
 
 export const CompanyDetails = ({ company }) => {
@@ -66,7 +74,7 @@ export const CompanyDetails = ({ company }) => {
     const [happinessRatings, avgHappinessRatings] =
         getHappinessRatings(company);
     const [rolesRatings, avgRolesRating] = getRolesRatings(company);
-    const [rolesSalary, avgRolesSalary] = getRolesRatings(company);
+    const [rolesSalary, avgRolesSalary] = getRolesSalary(company);
 
     return (
         <div style={styles.container}>
@@ -180,11 +188,14 @@ export const CompanyDetails = ({ company }) => {
                                     precision={0.1}
                                     title="Average Roles Rating"
                                 />
-                                <RatingComponent
-                                    rating={avgRolesSalary}
-                                    precision={0.1}
-                                    title="Average Salary"
-                                />
+
+                                <Typography style={styles.descriptionBig}>
+                                    Average Salary:
+                                </Typography>
+                                <div style={styles.salaryItem}>
+                                    {avgRolesSalary ?? "?"}
+                                    <AttachMoneyIcon />/h
+                                </div>
                             </div>
                         </Grid>
 
@@ -208,16 +219,18 @@ export const CompanyDetails = ({ company }) => {
                         <Grid item xs={4}>
                             <div style={styles.ratingColumn}>
                                 <Typography style={styles.titleXS}>
-                                    Salary
+                                    Salaries
                                 </Typography>
 
                                 {rolesSalary.map((perk) => (
-                                    <RatingComponent
-                                        rating={perk.rating}
-                                        precision={0.1}
-                                        title={perk.name}
-                                        key={perk.name}
-                                    />
+                                    <>
+                                        <Typography style={styles.description}>
+                                            {perk.name}: 
+                                        </Typography>
+                                        <div style={styles.salaryItem}>
+                                            {perk.salary} <AttachMoneyIcon />/h
+                                        </div>
+                                    </>
                                 ))}
                             </div>
                         </Grid>

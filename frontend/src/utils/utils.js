@@ -111,7 +111,7 @@ export const getRolesSalary = (company) => {
     for (const key of rolesKeys) {
         rolesSalary.push({
             name: key.split(".")[1],
-            rating: company[key],
+            salary: company[key],
         });
     }
 

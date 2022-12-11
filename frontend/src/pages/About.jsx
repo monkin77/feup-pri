@@ -51,7 +51,6 @@ export const AboutPage = () => {
         <div style={styles.container}>
             <div style={styles.centered}>
                 <h1 style={styles.title}>IndWish</h1>   
-                            
 
                 <div style={styles.centerColumn}>
                     {/* create a tag with a title for Who we are */}
