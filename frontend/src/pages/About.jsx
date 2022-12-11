@@ -75,9 +75,9 @@ export const AboutPage = () => {
                     </p>
 
 
-                    <h2 style={styles.subTitles}>How to view a company's information</h2>
+                    <h2 style={styles.subTitles}>How to view company's information</h2>
                     <p>
-                        In the results page, the user as two columns: one with all the results, and other showing the details of the selected
+                        In the results page, after searching, the user as two columns: one with all the results, and other showing the details of the selected
                         result. The details of the company are shown in the right column of the screen, in a card. To see the details
                         of other result/company, you simply have to right click on the desired result on the left column and the details on
                         the right one will switch to the new company.
