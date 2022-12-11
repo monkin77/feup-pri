@@ -264,7 +264,7 @@ export const CompanyDetails = ({ company }) => {
                                 </Typography>
 
                                 {rolesSalary.map((perk) => (
-                                    <>
+                                    <div key={perk.name}>
                                         <Typography style={styles.description}>
                                             {perk.name}:
                                         </Typography>
@@ -275,7 +275,7 @@ export const CompanyDetails = ({ company }) => {
                                             </PaidIcon>
                                             /h
                                         </div>
-                                    </>
+                                    </div>
                                 ))}
                             </div>
                         </Grid>

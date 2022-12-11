@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { CircularProgress, IconButton, Typography } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 import { querySolr } from "../controller/solr.js";
 import { CompanyCard } from "../components/CompanyCard.jsx";
 import { CompanyDetails } from "../components/CompanyDetails.jsx";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 
 const styles = {
     container: {
@@ -37,6 +38,8 @@ const styles = {
 
 export const ResultsPage = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+
     const searchValue = location.state?.searchValue;
 
     const [loading, setLoading] = useState(true);
@@ -66,11 +69,28 @@ export const ResultsPage = () => {
         fetchResults();
     }, [searchValue]);
 
+    const handleBack = () => {
+        navigate(-1);
+    };
+
     return (
         <div style={styles.container}>
-            <Typography variant="h4">
-                Showing Results for: {searchValue}
-            </Typography>
+            <div
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                }}
+            >
+                <Typography variant="h4">
+                    Showing Results for: {searchValue}
+                </Typography>
+
+                <IconButton onClick={handleBack}>
+                    <ArrowBack />
+                    <Typography style={{ marginLeft: 10 }}>Go Back</Typography>
+                </IconButton>
+            </div>
 
             {loading ? (
                 <div style={styles.loadingContainer}>
