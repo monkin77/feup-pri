@@ -144,3 +144,27 @@ export const getInterviewData = (company) => {
 
     return interviewData;
 }
+
+export const employeeMapper = {
+    1: "1",
+    2: "2 to 10",
+    3: "11 to 50",
+    4: "51 to 200",
+    5: "201 to 500",
+    6: "501 to 1,000",
+    7: "1,001 to 5,000",
+    8: "5,001 to 10,000",
+    9: "10,000+"
+};
+
+export const revenueMapper = {
+    1: "less than $1M (USD)",
+    2: "$1M to $5M (USD)",
+    3: "$5M to $25M (USD)",
+    4: "$25M to $100M (USD)",
+    5: "$100M to $500M (USD)",
+    6: "$500M to $1B (USD)",
+    7: "$1B to $5B (USD)",
+    8: "$5B to $10B (USD)",
+    9: "more than $10B (USD)"
+};

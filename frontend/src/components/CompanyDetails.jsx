@@ -1,9 +1,17 @@
 import React from "react";
 import { Divider, Grid, Typography } from "@mui/material";
 import { RatingComponent } from "./RatingComponent";
-import { getHappinessRatings, getInterviewData, getPerksRatings, getRolesRatings, getRolesSalary } from "../utils/utils";
+import {
+    employeeMapper,
+    getHappinessRatings,
+    getInterviewData,
+    getPerksRatings,
+    getRolesRatings,
+    getRolesSalary,
+    revenueMapper,
+} from "../utils/utils";
 import { Collapsable } from "./Collapsable";
-import PaidIcon from '@mui/icons-material/Paid';
+import PaidIcon from "@mui/icons-material/Paid";
 
 const styles = {
     container: {
@@ -33,7 +41,7 @@ const styles = {
         fontSize: 18,
     },
     body: {
-        fontSize: 15,
+        fontSize: 16,
     },
     customRatingContainer: {
         display: "flex",
@@ -64,8 +72,8 @@ const styles = {
         fontSize: 18,
         display: "flex",
         flexDirection: "row",
-        alignItems: "center", 
-        marginBottom: 5
+        alignItems: "center",
+        marginBottom: 5,
     },
 };
 
@@ -77,19 +85,40 @@ export const CompanyDetails = ({ company }) => {
     const [rolesSalary, avgRolesSalary] = getRolesSalary(company);
 
     const interview = getInterviewData(company);
+    const numEmployees = employeeMapper[company.employees];
+    const revenue = revenueMapper[company.revenue];
 
     return (
         <div style={styles.container}>
             <div style={styles.section}>
                 <div style={styles.mainTitleSection}>
-                    <Typography style={styles.mainTitle}>{company.name}</Typography>
-
-                    <Typography style={styles.description}>
-                        Industry: {company.industry}
+                    <Typography style={styles.mainTitle}>
+                        {company.name}
                     </Typography>
+
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <Typography style={styles.description}>
+                                <b>Industry:</b> {company.industry}
+                            </Typography>
+
+                            <Typography style={styles.description}>
+                                <b>Headquarters:</b> {company.headquarters}
+                            </Typography>
+                        </Grid>
+
+                        <Grid item xs={6}>
+                            <Typography style={styles.description}>
+                                <b>Number of Employees:</b> {numEmployees}
+                            </Typography>
+
+                            <Typography style={styles.description}>
+                                <b>Revenue:</b> {revenue}
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </div>
             </div>
-            
 
             <Divider />
 
@@ -104,7 +133,9 @@ export const CompanyDetails = ({ company }) => {
             <Divider />
 
             <div style={styles.section}>
-                <Collapsable title="Ratings">
+                <Collapsable
+                    title={`Ratings (based on ${company.reviews} reviews)`}
+                >
                     <Grid container spacing={2}>
                         <Grid item xs={4}>
                             <div style={styles.ratingColumn}>
@@ -170,7 +201,6 @@ export const CompanyDetails = ({ company }) => {
                             </div>
                         </Grid>
                     </Grid>
-
                 </Collapsable>
             </div>
 
@@ -195,7 +225,17 @@ export const CompanyDetails = ({ company }) => {
                                     Average Salary:
                                 </Typography>
                                 <div style={styles.salaryItem}>
-                                    {avgRolesSalary ? <>{avgRolesSalary}<PaidIcon color="success"> </PaidIcon>/h</> : "?"}
+                                    {avgRolesSalary ? (
+                                        <>
+                                            {avgRolesSalary}
+                                            <PaidIcon color="success">
+                                                {" "}
+                                            </PaidIcon>
+                                            /h
+                                        </>
+                                    ) : (
+                                        "?"
+                                    )}
                                 </div>
                             </div>
                         </Grid>
@@ -226,17 +266,20 @@ export const CompanyDetails = ({ company }) => {
                                 {rolesSalary.map((perk) => (
                                     <>
                                         <Typography style={styles.description}>
-                                            {perk.name}: 
+                                            {perk.name}:
                                         </Typography>
                                         <div style={styles.salaryItem}>
-                                            {perk.salary} <PaidIcon color="success"> </PaidIcon>/h
+                                            {perk.salary}{" "}
+                                            <PaidIcon color="success">
+                                                {" "}
+                                            </PaidIcon>
+                                            /h
                                         </div>
                                     </>
                                 ))}
                             </div>
                         </Grid>
                     </Grid>
-
                 </Collapsable>
             </div>
 
@@ -278,7 +321,6 @@ export const CompanyDetails = ({ company }) => {
                             </div>
                         </Grid>
                     </Grid>
-
                 </Collapsable>
             </div>
         </div>
