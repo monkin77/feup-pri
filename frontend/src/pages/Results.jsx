@@ -3,6 +3,7 @@ import { CircularProgress, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { querySolr } from "../controller/solr.js";
 import { CompanyCard } from "../components/CompanyCard.jsx";
+import { CompanyDetails } from "../components/CompanyDetails.jsx";
 
 const styles = {
     container: {
@@ -25,11 +26,13 @@ const styles = {
     },
     resultsContainer: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         flex: 1,
         minHeight: "100%",
     },
     cardsColumn: { width: "40%" },
+    cardDetailsContainer: { width: "60%" },
+    cardDetailsInner: { margin: 30 },
 };
 
 export const ResultsPage = () => {
@@ -43,6 +46,7 @@ export const ResultsPage = () => {
         numFoundExact: false,
         start: 0,
     });
+    const [selectedCard, setSelectedCard] = useState(null);
 
     useEffect(() => {
         const fetchResults = async () => {
@@ -53,6 +57,9 @@ export const ResultsPage = () => {
             } else {
                 setResults(res.data);
                 setLoading(false);
+                if (res.data.docs?.length > 0) {
+                    setSelectedCard(0);
+                }
             }
         };
 
@@ -73,14 +80,25 @@ export const ResultsPage = () => {
             ) : (
                 <div style={styles.resultsContainer}>
                     <div style={styles.cardsColumn}>
-                        {results.docs.map((document) => {
+                        {results.docs.map((document, index) => {
                             return (
                                 <CompanyCard
                                     company={document}
-                                    key={document.id}
+                                    cardIdx={index}
+                                    selectCard={setSelectedCard}
                                 />
                             );
                         })}
+                    </div>
+
+                    <div style={styles.cardDetailsContainer}>
+                        <div style={styles.cardDetailsInner}>
+                            {selectedCard !== null && (
+                                <CompanyDetails
+                                    company={results.docs[selectedCard]}
+                                />
+                            )}
+                        </div>
                     </div>
                 </div>
             )}

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Rating, Tooltip, Typography } from "@mui/material";
 
 const styles = {
-    cardContainer: {
+    cardContainer: (isHover) => ({
         width: "100%",
         height: 150,
         marginTop: 30,
@@ -11,7 +11,8 @@ const styles = {
         borderWidth: 2,
         padding: 10,
         boxSizing: "border-box", // Make Card dimensions include the padding + margin
-    },
+        ...(isHover && { cursor: "pointer", backgroundColor: "lightCyan" }),
+    }),
     title: {
         fontSize: 22,
         fontWeight: "bold",
@@ -32,7 +33,9 @@ const styles = {
     },
 };
 
-export const CompanyCard = ({ company, key }) => {
+export const CompanyCard = ({ company, cardIdx, selectCard }) => {
+    const [isHover, setIsHover] = useState(false);
+
     // Calculate the average rating of all perks
     const perksRatings = Object.keys(company).filter((key) =>
         key.startsWith("ratings.")
@@ -45,7 +48,16 @@ export const CompanyCard = ({ company, key }) => {
     avgPerksRating = avgPerksRating.toFixed(2);
 
     return (
-        <div style={styles.cardContainer} key={key}>
+        <div
+            style={styles.cardContainer(isHover)}
+            key={cardIdx}
+            onClick={() => {
+                console.log("Clicked container " + cardIdx);
+                selectCard(cardIdx);
+            }}
+            onMouseEnter={() => setIsHover(true)}
+            onMouseLeave={() => setIsHover(false)}
+        >
             <Grid container>
                 <Grid item xs={8}>
                     <Typography style={styles.title}>{company.name}</Typography>
