@@ -1,9 +1,9 @@
 import React from "react";
 import { Divider, Grid, Typography } from "@mui/material";
 import { RatingComponent } from "./RatingComponent";
-import { getHappinessRatings, getPerksRatings, getRolesRatings, getRolesSalary } from "../utils/utils";
+import { getHappinessRatings, getInterviewData, getPerksRatings, getRolesRatings, getRolesSalary } from "../utils/utils";
 import { Collapsable } from "./Collapsable";
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import PaidIcon from '@mui/icons-material/Paid';
 
 const styles = {
     container: {
@@ -75,6 +75,8 @@ export const CompanyDetails = ({ company }) => {
         getHappinessRatings(company);
     const [rolesRatings, avgRolesRating] = getRolesRatings(company);
     const [rolesSalary, avgRolesSalary] = getRolesSalary(company);
+
+    const interview = getInterviewData(company);
 
     return (
         <div style={styles.container}>
@@ -193,8 +195,7 @@ export const CompanyDetails = ({ company }) => {
                                     Average Salary:
                                 </Typography>
                                 <div style={styles.salaryItem}>
-                                    {avgRolesSalary ?? "?"}
-                                    <AttachMoneyIcon />/h
+                                    {avgRolesSalary ? <>{avgRolesSalary}<PaidIcon color="success"> </PaidIcon>/h</> : "?"}
                                 </div>
                             </div>
                         </Grid>
@@ -228,13 +229,54 @@ export const CompanyDetails = ({ company }) => {
                                             {perk.name}: 
                                         </Typography>
                                         <div style={styles.salaryItem}>
-                                            {perk.salary} <AttachMoneyIcon />/h
+                                            {perk.salary} <PaidIcon color="success"> </PaidIcon>/h
                                         </div>
                                     </>
                                 ))}
                             </div>
                         </Grid>
+                    </Grid>
 
+                </Collapsable>
+            </div>
+
+            <Divider />
+
+            <div style={styles.section}>
+                <Collapsable title="Interview">
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <div style={styles.ratingColumn}>
+                                <Typography style={styles.titleXS}>
+                                    Difficulty
+                                </Typography>
+                                <Typography style={styles.description}>
+                                    {interview["difficulty"] ?? "?"}
+                                </Typography>
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <div style={styles.ratingColumn}>
+                                <Typography style={styles.titleXS}>
+                                    Experience
+                                </Typography>
+                                <Typography style={styles.description}>
+                                    {interview["experience_"] ?? "?"}
+                                </Typography>
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <div style={styles.ratingColumn}>
+                                <Typography style={styles.titleXS}>
+                                    Duration
+                                </Typography>
+                                <Typography style={styles.description}>
+                                    {interview["duration"] ?? "?"}
+                                </Typography>
+                            </div>
+                        </Grid>
                     </Grid>
 
                 </Collapsable>

@@ -125,3 +125,22 @@ export const getRolesSalary = (company) => {
 
     return [rolesSalary, avgRolesSalary];
 }
+
+
+/**
+ * 
+ * @param {*} company 
+ * @returns List of Interview data and their values {difficulty: "Easy", duration: "About a day or two"}
+ */
+export const getInterviewData = (company) => {
+    const interviewKeys = Object.keys(company).filter((key) =>
+        key.startsWith("interview.")
+    );
+    const interviewData = {};
+    for (const key of interviewKeys) {
+        interviewData[key.split(".")[1]] = company[key];
+
+    }
+
+    return interviewData;
+}
