@@ -1,7 +1,7 @@
 import React from "react";
 import { Divider, Grid, Typography } from "@mui/material";
 import { RatingComponent } from "./RatingComponent";
-import { getHappinessRatings, getPerksRatings } from "../utils/utils";
+import { getHappinessRatings, getPerksRatings, getRolesRatings } from "../utils/utils";
 import { Collapsable } from "./Collapsable";
 
 const styles = {
@@ -46,6 +46,9 @@ const styles = {
         marginTop: 10,
         marginBottom: 10,
     },
+    mainTitleSection: {
+        marginLeft: 15,
+    },
     ratingColumn: {
         display: "flex",
         flexDirection: "column",
@@ -62,16 +65,21 @@ export const CompanyDetails = ({ company }) => {
     const [perksRatings, avgPerksRating] = getPerksRatings(company);
     const [happinessRatings, avgHappinessRatings] =
         getHappinessRatings(company);
+    const [rolesRatings, avgRolesRating] = getRolesRatings(company);
+    const [rolesSalary, avgRolesSalary] = getRolesRatings(company);
 
     return (
         <div style={styles.container}>
             <div style={styles.section}>
-                <Typography style={styles.mainTitle}>{company.name}</Typography>
+                <div style={styles.mainTitleSection}>
+                    <Typography style={styles.mainTitle}>{company.name}</Typography>
 
-                <Typography style={styles.description}>
-                    Industry: {company.industry}
-                </Typography>
+                    <Typography style={styles.description}>
+                        Industry: {company.industry}
+                    </Typography>
+                </div>
             </div>
+            
 
             <Divider />
 
@@ -87,7 +95,7 @@ export const CompanyDetails = ({ company }) => {
 
             <div style={styles.section}>
                 <Collapsable title="Ratings">
-                    <Grid container>
+                    <Grid container spacing={2}>
                         <Grid item xs={4}>
                             <div style={styles.ratingColumn}>
                                 <Typography style={styles.titleXS}>
@@ -152,6 +160,70 @@ export const CompanyDetails = ({ company }) => {
                             </div>
                         </Grid>
                     </Grid>
+
+                </Collapsable>
+            </div>
+
+            <Divider />
+
+            <div style={styles.section}>
+                <Collapsable title="Roles">
+                    <Grid container spacing={2}>
+                        <Grid item xs={4}>
+                            <div style={styles.ratingColumn}>
+                                <Typography style={styles.titleXS}>
+                                    General
+                                </Typography>
+
+                                <RatingComponent
+                                    rating={avgRolesRating}
+                                    precision={0.1}
+                                    title="Average Roles Rating"
+                                />
+                                <RatingComponent
+                                    rating={avgRolesSalary}
+                                    precision={0.1}
+                                    title="Average Salary"
+                                />
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <div style={styles.ratingColumn}>
+                                <Typography style={styles.titleXS}>
+                                    Roles
+                                </Typography>
+
+                                {rolesRatings.map((perk) => (
+                                    <RatingComponent
+                                        rating={perk.rating}
+                                        precision={0.1}
+                                        title={perk.name}
+                                        key={perk.name}
+                                    />
+                                ))}
+                            </div>
+                        </Grid>
+
+                        <Grid item xs={4}>
+                            <div style={styles.ratingColumn}>
+                                <Typography style={styles.titleXS}>
+                                    Salary
+                                </Typography>
+
+                                {rolesSalary.map((perk) => (
+                                    <RatingComponent
+                                        rating={perk.rating}
+                                        precision={0.1}
+                                        title={perk.name}
+                                        key={perk.name}
+                                    />
+                                ))}
+                            </div>
+                        </Grid>
+
+                    </Grid>
+
                 </Collapsable>
             </div>
         </div>

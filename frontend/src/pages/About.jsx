@@ -8,7 +8,6 @@ const styles = {
         backgroundColor: "lightBlue",
         boxSizing: "border-box",
         position: "relative",
-        height: "100%",
     },
     centered: {
         display: "flex",

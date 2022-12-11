@@ -69,3 +69,59 @@ export const getHappinessRatings = (company) => {
 
     return [happinessRatings, avgHappinessRatings];
 }
+
+/**
+ * 
+ * @param {*} company 
+ * @returns [List, avg] List of Roles and their ratings [{name: "perk1", rating: 4}, {name: "perk2", rating: 5}}]
+ */
+export const getRolesRatings = (company) => {
+    const rolesKeys = Object.keys(company).filter((key) =>
+        key.startsWith("roles.")
+    );
+    const rolesRating = [];
+    for (const key of rolesKeys) {
+        rolesRating.push({
+            name: key.split(".")[1],
+            rating: company[key],
+        });
+    }
+
+    let avgRolesRating = rolesKeys.reduce(
+        (accumulator, currPerk) => accumulator + company[currPerk],
+        0
+    );
+    avgRolesRating = avgRolesRating / rolesKeys.length;
+    avgRolesRating = avgRolesRating.toFixed(2);
+    if (avgRolesRating === "NaN") avgRolesRating = null;
+
+    return [rolesRating, avgRolesRating];
+}
+
+/**
+ * 
+ * @param {*} company 
+ * @returns [List, avg] List of Roles and their salaries [{name: "perk1", salary: 4}, {name: "perk2", salary: 5}}]
+ */
+export const getRolesSalary = (company) => {
+    const rolesKeys = Object.keys(company).filter((key) =>
+        key.startsWith("salary.")
+    );
+    const rolesSalary = [];
+    for (const key of rolesKeys) {
+        rolesSalary.push({
+            name: key.split(".")[1],
+            rating: company[key],
+        });
+    }
+
+    let avgRolesSalary = rolesKeys.reduce(
+        (accumulator, currPerk) => accumulator + company[currPerk],
+        0
+    );
+    avgRolesSalary = avgRolesSalary / rolesKeys.length;
+    avgRolesSalary = avgRolesSalary.toFixed(2);
+    if (avgRolesSalary === "NaN") avgRolesSalary = null;
+
+    return [rolesSalary, avgRolesSalary];
+}
