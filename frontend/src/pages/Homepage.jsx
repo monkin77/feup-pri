@@ -60,6 +60,9 @@ const styles = {
         border: "solid",
         borderWidth: 2,
     },
+    configInput: {
+        marginLeft: 20,
+    },
 };
 
 export const HomePage = () => {
@@ -167,10 +170,12 @@ export const HomePage = () => {
 
                                     <div style={styles.configField}>
                                         <Typography>Industry</Typography>
+                                        {/* Add slider for boosting */}
                                     </div>
 
                                     <div style={styles.configField}>
                                         <Typography>Descrition</Typography>
+                                        {/* Add slider for boosting */}
                                     </div>
                                 </Grid>
 
@@ -179,18 +184,35 @@ export const HomePage = () => {
                                         <Typography variant="h5">
                                             Query Operation
                                         </Typography>
+                                        {/* Add Dropdown with query operations */}
                                     </div>
 
                                     <div style={styles.configField}>
-                                        <Typography variant="h5">
-                                            Number of Results
-                                        </Typography>
+                                        <TextField
+                                            id="numResultsInput"
+                                            label="Number of Results"
+                                            variant="outlined"
+                                            style={styles.configInput}
+                                            placeholder="Number of Results"
+                                            color="primary"
+                                            value={search}
+                                            onChange={onChangeSearch}
+                                        />
+                                        {/* Add Numeric input for number of results */}
                                     </div>
 
                                     <div style={styles.configField}>
-                                        <Typography variant="h5">
-                                            Offset
-                                        </Typography>
+                                        <TextField
+                                            id="offsetInput"
+                                            label="Search Offset"
+                                            variant="outlined"
+                                            style={styles.configInput}
+                                            placeholder="Offset"
+                                            color="primary"
+                                            value={search}
+                                            onChange={onChangeSearch}
+                                        />
+                                        {/* Add Numeric input for number of results */}
                                     </div>
                                 </Grid>
                             </Grid>
