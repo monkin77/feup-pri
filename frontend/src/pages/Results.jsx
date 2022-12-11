@@ -30,6 +30,7 @@ export const ResultsPage = () => {
     const searchValue = location.state?.searchValue;
 
     const [loading, setLoading] = useState(true);
+    const [results, setResults] = useState({numFound: 0, docs: [], numFoundExact: false, start: 0});
 
     useEffect(() => {
         // TODO: Fetch items from the backend for this search
@@ -39,8 +40,12 @@ export const ResultsPage = () => {
     const fetchResults = async () => {
         console.log("Fetching results for: " + searchValue);
         const res = await querySolr(searchValue);
-        console.log(res);
-        setLoading(false);
+        if (!res.ok) {
+            console.log("Error fetching results: " + res);
+        } else {
+            setResults(res.data);
+            setLoading(false);
+        }
     }
 
     return (
