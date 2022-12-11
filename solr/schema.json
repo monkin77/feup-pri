@@ -45,6 +45,18 @@
             }
         },
         {
+            "name":"basicText",
+            "class":"solr.TextField",
+            "analyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            }
+        },
+        {
             "name": "ratingValue",
             "class":"solr.DoublePointField"
         },
@@ -58,7 +70,8 @@
         },
         {
             "name": "enumerable",
-            "class":"solr.IntPointField"
+            "class":"solr.IntPointField",
+            "docValues":true
         }
     ],
     "add-field": [
@@ -151,6 +164,12 @@
             "type": "countable",
             "indexed": false,
             "stored": true
+        },
+        {
+            "name": "description_suggest",
+            "type": "basicText",
+            "indexed": true,
+            "stored": true
         }
     ],
     "add-dynamic-field": [
@@ -184,5 +203,9 @@
             "indexed": true,
             "stored": true
         }
-    ]
+    ],
+    "add-copy-field": {
+        "source": "description",
+        "dest": "description_suggest"
+    }
 }
