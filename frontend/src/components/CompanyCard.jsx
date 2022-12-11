@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Grid, Rating, Tooltip, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
+import { RatingComponent } from "./RatingComponent";
 
 const styles = {
     cardContainer: (isHover) => ({
@@ -46,13 +47,13 @@ export const CompanyCard = ({ company, cardIdx, selectCard }) => {
     );
     avgPerksRating = avgPerksRating / perksRatings.length;
     avgPerksRating = avgPerksRating.toFixed(2);
+    if (avgPerksRating === "NaN") avgPerksRating = null;
 
     return (
         <div
             style={styles.cardContainer(isHover)}
             key={cardIdx}
             onClick={() => {
-                console.log("Clicked container " + cardIdx);
                 selectCard(cardIdx);
             }}
             onMouseEnter={() => setIsHover(true)}
@@ -79,41 +80,23 @@ export const CompanyCard = ({ company, cardIdx, selectCard }) => {
                 </Grid>
 
                 <Grid item xs={4}>
-                    <Typography style={styles.descriptionBig}>
-                        IndWish Rating
-                    </Typography>
-                    <div style={styles.customRatingContainer}>
-                        <Rating
-                            name="custom-rating"
-                            value={company.custom_rating}
-                            precision={0.1}
-                            readOnly
-                        />
-
-                        <Typography style={styles.description}>
-                            ({company.custom_rating ?? "?"})
-                        </Typography>
-                    </div>
+                    <RatingComponent
+                        rating={company.custom_rating}
+                        precision={0.1}
+                        title="IndWish Rating"
+                        hasTooltip={true}
+                        tooltipText="This rating is based on the global rating, happiness and perks parameters."
+                    />
 
                     <div style={styles.divider} />
 
-                    <Tooltip title="Calculated based on different Work Perks, such as Work/Life Balance">
-                        <Typography style={styles.descriptionBig}>
-                            Perks Rating
-                        </Typography>
-                    </Tooltip>
-                    <div style={styles.customRatingContainer}>
-                        <Rating
-                            name="custom-rating"
-                            value={avgPerksRating}
-                            precision={0.1}
-                            readOnly
-                        />
-
-                        <Typography style={styles.description}>
-                            ({avgPerksRating ?? "?"})
-                        </Typography>
-                    </div>
+                    <RatingComponent
+                        rating={avgPerksRating}
+                        precision={0.1}
+                        title="Perks Rating"
+                        hasTooltip={true}
+                        tooltipText="Calculated based on different Work Perks, such as Work/Life Balance"
+                    />
                 </Grid>
             </Grid>
         </div>

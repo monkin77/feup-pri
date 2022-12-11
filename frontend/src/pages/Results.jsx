@@ -86,6 +86,7 @@ export const ResultsPage = () => {
                                     company={document}
                                     cardIdx={index}
                                     selectCard={setSelectedCard}
+                                    key={`card-${index}`}
                                 />
                             );
                         })}
