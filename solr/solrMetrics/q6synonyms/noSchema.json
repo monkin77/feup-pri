@@ -1,0 +1,14 @@
+{
+  "responseHeader":{
+    "status":0,
+    "QTime":76,
+    "params":{
+      "q":"panic",
+      "defType":"edismax",
+      "indent":"true",
+      "qf":"name industry description",
+      "start":"0",
+      "q.op":"OR",
+      "_":"1670750314497"}},
+  "response":{"numFound":0,"start":0,"numFoundExact":true,"docs":[]
+  }}
