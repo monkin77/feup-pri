@@ -49,31 +49,33 @@ export const HomePage = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <div style={styles.centered}>
-                <h1 style={styles.title}>IndWish</h1>
-                <form style={styles.searchBar} onSubmit={handleSubmit}>
-                    <TextField
-                        id="searchBar"
-                        label="Search for Companies"
-                        variant="outlined"
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={handleSubmit}>
-                                        <SearchIcon />
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                        style={Stylesheet.fullWidth}
-                        placeholder="Search"
-                        color="primary"
-                        value={search}
-                        onChange={onChangeSearch}
-                    />
-                </form>
+        <>
+            <div style={styles.container}>
+                <div style={styles.centered}>
+                    <h1 style={styles.title}>IndWish</h1>
+                    <form style={styles.searchBar} onSubmit={handleSubmit}>
+                        <TextField
+                            id="searchBar"
+                            label="Search for Companies"
+                            variant="outlined"
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={handleSubmit}>
+                                            <SearchIcon />
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            style={Stylesheet.fullWidth}
+                            placeholder="Search"
+                            color="primary"
+                            value={search}
+                            onChange={onChangeSearch}
+                        />
+                    </form>
+                </div>
             </div>
-        </div>
+        </>
     );
 };

@@ -6,6 +6,7 @@ import { HomePage } from "./pages/Homepage";
 import "./index.css"
 import { ResultsPage } from "./pages/Results";
 import { AboutPage } from "./pages/About";
+import { Navbar } from "./components/Navbar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,8 +17,7 @@ root.render(
                 <Route path="/results" element={<ResultsPage />} />
                 <Route path="/about" element={<AboutPage />} />
             </Routes>
-
-            {/* Optional TODO: Add new Route for a "todo's item details page" */}
+            <Navbar/>
         </BrowserRouter>
     </React.StrictMode>
 );
