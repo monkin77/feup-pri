@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
     Autocomplete,
+    Grid,
     IconButton,
     InputAdornment,
     TextField,
@@ -10,6 +11,7 @@ import { Search as SearchIcon, Tune as TuneIcon } from "@mui/icons-material";
 import { Stylesheet } from "../styles/stylesheet";
 import { useNavigate } from "react-router-dom";
 import { getSuggestion } from "../controller/solr";
+import { queryOperations } from "../utils/utils";
 
 const styles = {
     container: {
@@ -44,17 +46,36 @@ const styles = {
     tuneIcon: {
         marginLeft: 5,
     },
-    weigthField: {
+    configField: {
         display: "flex",
         flexDirection: "row",
+        marginTop: 15,
+    },
+    configContainer: {
+        width: "40%",
+        marginTop: 20,
+        padding: 20,
+        borderRadius: 20,
+        // backgroundColor: "lightGray",
+        border: "solid",
+        borderWidth: 2,
     },
 };
 
 export const HomePage = () => {
+    const navigate = useNavigate();
+
     const [search, setSearch] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [configOpen, setConfigOpen] = useState(false);
-    const navigate = useNavigate();
+    const [fieldBoosts, setfieldBoosts] = useState({
+        name: 1.0,
+        industry: 1.0,
+        description: 1.0,
+    });
+    const [numRows, setNumRows] = useState(10);
+    const [queryOp, setQueryOp] = useState(queryOperations.OR);
+    const [offset, setOffset] = useState(0);
 
     useEffect(() => {}, []);
 
@@ -69,7 +90,15 @@ export const HomePage = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        navigate("/results", { state: { searchValue: search } });
+        navigate("/results", {
+            state: {
+                searchValue: search,
+                fieldBoosts,
+                numRows,
+                queryOp,
+                offset,
+            },
+        });
     };
 
     const toggleConfig = () => setConfigOpen((prevValue) => !prevValue);
@@ -125,28 +154,46 @@ export const HomePage = () => {
                     </div>
 
                     {configOpen && (
-                        <div
-                            style={{
-                                width: "50%",
-                                marginTop: 20,
-                                backgroundColor: "lightGray",
-                                padding: 20,
-                                borderRadius: 20,
-                            }}
-                        >
-                            <Typography>Term Boosting</Typography>
-                            <div style={styles.weigthField}>
-                                <Typography>Name</Typography>
-                                {/* Add slider for boosting */}
-                            </div>
+                        <div style={styles.configContainer}>
+                            <Grid container>
+                                <Grid item xs={6}>
+                                    <Typography variant="h5">
+                                        Term Boosting
+                                    </Typography>
+                                    <div style={styles.configField}>
+                                        <Typography>Name</Typography>
+                                        {/* Add slider for boosting */}
+                                    </div>
 
-                            <div style={styles.weigthField}>
-                                <Typography>Industry</Typography>
-                            </div>
+                                    <div style={styles.configField}>
+                                        <Typography>Industry</Typography>
+                                    </div>
 
-                            <div style={styles.weigthField}>
-                                <Typography>Descrition</Typography>
-                            </div>
+                                    <div style={styles.configField}>
+                                        <Typography>Descrition</Typography>
+                                    </div>
+                                </Grid>
+
+                                <Grid item xs={6}>
+                                    <div style={styles.configField}>
+                                        <Typography variant="h5">
+                                            Query Operation
+                                        </Typography>
+                                    </div>
+
+                                    <div style={styles.configField}>
+                                        <Typography variant="h5">
+                                            Number of Results
+                                        </Typography>
+                                    </div>
+
+                                    <div style={styles.configField}>
+                                        <Typography variant="h5">
+                                            Offset
+                                        </Typography>
+                                    </div>
+                                </Grid>
+                            </Grid>
                         </div>
                     )}
                 </div>

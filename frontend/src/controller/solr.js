@@ -1,3 +1,5 @@
+import { queryOperations } from "../utils/utils";
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8983";
 
 /**
@@ -5,10 +7,18 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8983"
  * @param {string} query 
  * @returns {ok: boolean, data: data, err: string}
  */
-export const querySolr = async(query) => {
+export const querySolr = async(query, queryOp = queryOperations.OR, fieldBoosts = null, numberResults = 10, offset = 0) => {
     try {
-        // TODO: Additional params  &qf=name+industry+description&rows=10
-        const response = await fetch(`${BACKEND_URL}/solr/reviews/select?defType=edismax&indent=true&q.op=OR&q=${query}&qf=name%20industry%20description&rows=10&start=0`, {
+        // TODO: Test this query. Before it was name%20industry%20description
+        let queryFields = "name&industry&description";
+        if (fieldBoosts) {
+            queryFields = `name^${fieldBoosts.name}&industry^${fieldBoosts.industry}&description^${fieldBoosts.description}`;
+        }
+
+        const reqUrl = `${BACKEND_URL}/solr/reviews/select?defType=edismax&indent=true&q.op=${queryOp}&q=${query}&
+        qf=${queryFields}&rows=${numberResults}&start=${offset}`;
+
+        const response = await fetch(reqUrl, {
             method: 'GET',
         });
 

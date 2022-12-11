@@ -38,7 +38,8 @@ const styles = {
 export const ResultsPage = () => {
     const location = useLocation();
 
-    const searchValue = location.state?.searchValue;
+    const { searchValue, fieldBoosts, numRows, queryOp, offset } =
+        location.state;
 
     const [loading, setLoading] = useState(true);
     const [results, setResults] = useState({
@@ -52,7 +53,13 @@ export const ResultsPage = () => {
     useEffect(() => {
         const fetchResults = async () => {
             console.log("Fetching results for: " + searchValue);
-            const res = await querySolr(searchValue);
+            const res = await querySolr(
+                searchValue,
+                queryOp,
+                fieldBoosts,
+                numRows,
+                offset
+            );
             if (!res.ok) {
                 console.log("Error fetching results: " + res);
             } else {
@@ -65,7 +72,7 @@ export const ResultsPage = () => {
         };
 
         fetchResults();
-    }, [searchValue]);
+    }, [searchValue, queryOp, fieldBoosts, numRows, offset]);
 
     return (
         <div style={styles.container}>
