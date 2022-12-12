@@ -147,6 +147,7 @@ export const HomePage = () => {
                                 options={suggestions}
                                 style={Stylesheet.fullWidth}
                                 onChange={(event, value) => setSearch(value)}
+                                freeSolo
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
