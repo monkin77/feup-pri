@@ -10,13 +10,13 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL ?? "http://localhost:8983"
 export const querySolr = async(query, queryOp = queryOperations.OR, fieldBoosts = null, numberResults = 10, offset = 0) => {
     try {
         // TODO: Test this query. Before it was name%20industry%20description
-        let queryFields = "name&industry&description";
+        let queryFields = "name industry description";
         if (fieldBoosts) {
-            queryFields = `name^${fieldBoosts.name}&industry^${fieldBoosts.industry}&description^${fieldBoosts.description}`;
+            queryFields = `name^${fieldBoosts.name} industry^${fieldBoosts.industry} description^${fieldBoosts.description}`;
         }
 
         const reqUrl = `${BACKEND_URL}/solr/reviews/select?defType=edismax&indent=true&q.op=${queryOp}&q=${query}&
-        qf=${queryFields}&rows=${numberResults}&start=${offset}`;
+qf=${queryFields}&rows=${numberResults}&start=${offset}`;
 
         const response = await fetch(reqUrl, {
             method: 'GET',

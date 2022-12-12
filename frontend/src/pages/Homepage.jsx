@@ -4,6 +4,7 @@ import {
     Grid,
     IconButton,
     InputAdornment,
+    Slider,
     TextField,
     Typography,
 } from "@mui/material";
@@ -12,6 +13,7 @@ import { Stylesheet } from "../styles/stylesheet";
 import { useNavigate } from "react-router-dom";
 import { getSuggestion } from "../controller/solr";
 import { queryOperations } from "../utils/utils";
+import { ConfigSlider } from "../components/ConfigSlider";
 
 const styles = {
     container: {
@@ -106,6 +108,13 @@ export const HomePage = () => {
 
     const toggleConfig = () => setConfigOpen((prevValue) => !prevValue);
 
+    const changeBoost = (boostKey, newVal) => {
+        setfieldBoosts((prevValue) => ({
+            ...prevValue,
+            [boostKey]: newVal,
+        }));
+    };
+
     return (
         <>
             <div style={styles.container}>
@@ -161,22 +170,38 @@ export const HomePage = () => {
                             <Grid container>
                                 <Grid item xs={6}>
                                     <Typography variant="h5">
-                                        Term Boosting
+                                        Field Boosts
                                     </Typography>
-                                    <div style={styles.configField}>
-                                        <Typography>Name</Typography>
-                                        {/* Add slider for boosting */}
-                                    </div>
 
-                                    <div style={styles.configField}>
-                                        <Typography>Industry</Typography>
-                                        {/* Add slider for boosting */}
-                                    </div>
+                                    <ConfigSlider
+                                        title="Name"
+                                        field={fieldBoosts.name}
+                                        fieldKey="name"
+                                        onChange={changeBoost}
+                                        min={0}
+                                        max={4}
+                                        step={0.25}
+                                    />
 
-                                    <div style={styles.configField}>
-                                        <Typography>Descrition</Typography>
-                                        {/* Add slider for boosting */}
-                                    </div>
+                                    <ConfigSlider
+                                        title="Industry"
+                                        field={fieldBoosts.industry}
+                                        fieldKey="industry"
+                                        onChange={changeBoost}
+                                        min={0}
+                                        max={4}
+                                        step={0.25}
+                                    />
+
+                                    <ConfigSlider
+                                        title="Description"
+                                        field={fieldBoosts.description}
+                                        fieldKey="description"
+                                        onChange={changeBoost}
+                                        min={0}
+                                        max={4}
+                                        step={0.25}
+                                    />
                                 </Grid>
 
                                 <Grid item xs={6}>
