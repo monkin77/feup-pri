@@ -9,7 +9,7 @@ const styles = {
     },
     configSlider: {
         marginLeft: 20,
-        marginRight: 20,
+        marginRight: 40,
     },
     title: {
         minWidth: 120,

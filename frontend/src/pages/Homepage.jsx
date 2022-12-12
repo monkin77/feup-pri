@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
     Autocomplete,
+    FormControlLabel,
     Grid,
     IconButton,
     InputAdornment,
-    Slider,
+    Radio,
+    RadioGroup,
     TextField,
     Typography,
 } from "@mui/material";
@@ -65,6 +67,10 @@ const styles = {
     configInput: {
         marginLeft: 20,
     },
+    radioContainer: { marginLeft: 20 },
+    configSection: {
+        width: 120,
+    },
 };
 
 export const HomePage = () => {
@@ -113,6 +119,18 @@ export const HomePage = () => {
             ...prevValue,
             [boostKey]: newVal,
         }));
+    };
+
+    const handleOperationChange = (_, newVal) => {
+        setQueryOp(newVal);
+    };
+
+    const changeNumRows = (evt) => {
+        setNumRows(evt.target.value);
+    };
+
+    const changeOffset = (evt) => {
+        setOffset(evt.target.value);
     };
 
     return (
@@ -205,14 +223,43 @@ export const HomePage = () => {
                                 </Grid>
 
                                 <Grid item xs={6}>
-                                    <div style={styles.configField}>
-                                        <Typography variant="h5">
-                                            Query Operation
+                                    <div style={Stylesheet.flexRow}>
+                                        <Typography
+                                            variant="h5"
+                                            style={styles.configSection}
+                                        >
+                                            Operation
                                         </Typography>
-                                        {/* Add Dropdown with query operations */}
+
+                                        <RadioGroup
+                                            aria-labelledby="demo-controlled-radio-buttons-group"
+                                            name="controlled-radio-buttons-group"
+                                            row
+                                            value={queryOp}
+                                            onChange={handleOperationChange}
+                                            style={styles.radioContainer}
+                                        >
+                                            <FormControlLabel
+                                                value={queryOperations.OR}
+                                                control={<Radio />}
+                                                label={queryOperations.OR}
+                                            />
+                                            <FormControlLabel
+                                                value={queryOperations.AND}
+                                                control={<Radio />}
+                                                label={queryOperations.AND}
+                                            />
+                                        </RadioGroup>
                                     </div>
 
                                     <div style={styles.configField}>
+                                        <Typography
+                                            variant="h5"
+                                            style={styles.configSection}
+                                        >
+                                            Results
+                                        </Typography>
+
                                         <TextField
                                             id="numResultsInput"
                                             label="Number of Results"
@@ -220,13 +267,20 @@ export const HomePage = () => {
                                             style={styles.configInput}
                                             placeholder="Number of Results"
                                             color="primary"
-                                            value={search}
-                                            onChange={onChangeSearch}
+                                            value={numRows}
+                                            onChange={changeNumRows}
+                                            size="small"
                                         />
-                                        {/* Add Numeric input for number of results */}
                                     </div>
 
                                     <div style={styles.configField}>
+                                        <Typography
+                                            variant="h5"
+                                            style={styles.configSection}
+                                        >
+                                            Offset
+                                        </Typography>
+
                                         <TextField
                                             id="offsetInput"
                                             label="Search Offset"
@@ -234,10 +288,10 @@ export const HomePage = () => {
                                             style={styles.configInput}
                                             placeholder="Offset"
                                             color="primary"
-                                            value={search}
-                                            onChange={onChangeSearch}
+                                            value={offset}
+                                            onChange={changeOffset}
+                                            size="small"
                                         />
-                                        {/* Add Numeric input for number of results */}
                                     </div>
                                 </Grid>
                             </Grid>
