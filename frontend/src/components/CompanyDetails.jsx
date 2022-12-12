@@ -73,6 +73,7 @@ const styles = {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "center",
         marginBottom: 5,
     },
 };
@@ -269,10 +270,8 @@ export const CompanyDetails = ({ company }) => {
                                             {perk.name}:
                                         </Typography>
                                         <div style={styles.salaryItem}>
-                                            {perk.salary}{" "}
-                                            <PaidIcon color="success">
-                                                {" "}
-                                            </PaidIcon>
+                                            {perk.salary}
+                                            <PaidIcon color="success" />
                                             /h
                                         </div>
                                     </div>
