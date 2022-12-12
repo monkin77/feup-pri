@@ -8,18 +8,17 @@ import { CompanyDetails } from "../components/CompanyDetails.jsx";
 const styles = {
     container: {
         padding: "1rem",
-        minHeight: "100vh",
         backgroundColor: "lightBlue",
         boxSizing: "border-box",
         position: "relative",
+        minHeight: "100%",
     },
     loadingContainer: {
         display: "flex",
         flexDirection: "column",
         flex: 1,
-        height: "100%",
-        justifyContent: "center",
         alignItems: "center",
+        marginTop: "15%",
     },
     loading: {
         marginBottom: "2rem",
@@ -38,7 +37,8 @@ const styles = {
 export const ResultsPage = () => {
     const location = useLocation();
 
-    const searchValue = location.state?.searchValue;
+    const { searchValue, fieldBoosts, numRows, queryOp, offset } =
+        location.state;
 
     const [loading, setLoading] = useState(true);
     const [results, setResults] = useState({
@@ -52,7 +52,13 @@ export const ResultsPage = () => {
     useEffect(() => {
         const fetchResults = async () => {
             console.log("Fetching results for: " + searchValue);
-            const res = await querySolr(searchValue);
+            const res = await querySolr(
+                searchValue,
+                queryOp,
+                fieldBoosts,
+                numRows,
+                offset
+            );
             if (!res.ok) {
                 console.log("Error fetching results: " + res);
             } else {
@@ -65,52 +71,46 @@ export const ResultsPage = () => {
         };
 
         fetchResults();
-    }, [searchValue]);
+    }, [searchValue, queryOp, fieldBoosts, numRows, offset]);
 
     return (
         <div style={styles.container}>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                }}
-            >
-                <Typography variant="h4">
-                    Showing Results for: {searchValue}
-                </Typography>
-            </div>
-
             {loading ? (
                 <div style={styles.loadingContainer}>
                     <CircularProgress style={styles.loading} size={75} />
                     <Typography variant="h3">Loading...</Typography>
                 </div>
             ) : (
-                <div style={styles.resultsContainer}>
-                    <div style={styles.cardsColumn}>
-                        {results.docs.map((document, index) => {
-                            return (
-                                <CompanyCard
-                                    company={document}
-                                    cardIdx={index}
-                                    selectCard={setSelectedCard}
-                                    key={`card-${index}`}
-                                />
-                            );
-                        })}
-                    </div>
+                <>
+                    <Typography variant="h4">
+                        Found {results.numFound} results for: {searchValue}
+                    </Typography>
 
-                    <div style={styles.cardDetailsContainer}>
-                        <div style={styles.cardDetailsInner}>
-                            {selectedCard !== null && (
-                                <CompanyDetails
-                                    company={results.docs[selectedCard]}
-                                />
-                            )}
+                    <div style={styles.resultsContainer}>
+                        <div style={styles.cardsColumn}>
+                            {results.docs.map((document, index) => {
+                                return (
+                                    <CompanyCard
+                                        company={document}
+                                        cardIdx={index}
+                                        selectCard={setSelectedCard}
+                                        key={`card-${index}`}
+                                    />
+                                );
+                            })}
+                        </div>
+
+                        <div style={styles.cardDetailsContainer}>
+                            <div style={styles.cardDetailsInner}>
+                                {selectedCard !== null && (
+                                    <CompanyDetails
+                                        company={results.docs[selectedCard]}
+                                    />
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
+                </>
             )}
         </div>
     );

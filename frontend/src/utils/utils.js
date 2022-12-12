@@ -168,3 +168,8 @@ export const revenueMapper = {
     8: "$5B to $10B (USD)",
     9: "more than $10B (USD)"
 };
+
+export const queryOperations = {
+    AND: "AND",
+    OR: "OR"
+};
