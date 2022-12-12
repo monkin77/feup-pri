@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Autocomplete, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 import { Stylesheet } from "../styles/stylesheet";
 import {useNavigate} from 'react-router-dom'
+import { getSuggestion } from "../controller/solr";
 
 const styles = {
     container: {
@@ -30,16 +31,22 @@ const styles = {
     },
 };
 
+
 export const HomePage = () => {
     const [search, setSearch] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         
     }, []);
 
-    const onChangeSearch = (event) => {
+    const onChangeSearch = async (event) => {
         setSearch(event.target.value);
+        const newSuggestions = await getSuggestion(event.target.value);
+        if (newSuggestions.ok) {
+            setSuggestions(newSuggestions.data);
+        }
     }
 
     const handleSubmit = (event) => {
@@ -54,25 +61,36 @@ export const HomePage = () => {
                 <div style={styles.centered}>
                     <h1 style={styles.title}>IndWish</h1>
                     <form style={styles.searchBar} onSubmit={handleSubmit}>
-                        <TextField
-                            id="searchBar"
-                            label="Search for Companies"
-                            variant="outlined"
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={handleSubmit}>
-                                            <SearchIcon />
-                                        </IconButton>
-                                    </InputAdornment>
-                                ),
-                            }}
+                        <Autocomplete
+                            disablePortal
+                            id="combo-box-demo"
+                            options={suggestions}
                             style={Stylesheet.fullWidth}
-                            placeholder="Search"
-                            color="primary"
-                            value={search}
-                            onChange={onChangeSearch}
-                        />
+                            onChange={(event, value) => setSearch(value)}
+                            renderInput={(params) =>
+                                <TextField
+                                    {...params}
+                                    id="searchBar"
+                                    label="Search for Companies"
+                                    variant="outlined"
+                                    InputProps={{
+                                        ...params.InputProps,
+                                        autoComplete: 'new-password', // disable autocomplete and autofill
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={handleSubmit}>
+                                                    <SearchIcon />
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                    placeholder="Search"
+                                    color="primary"
+                                    value={search}
+                                    onChange={onChangeSearch}
+                                    />
+                                }
+                            />
                     </form>
                 </div>
             </div>
