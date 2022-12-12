@@ -50,44 +50,63 @@ export const AboutPage = () => {
     return (
         <div style={styles.container}>
             <div style={styles.centered}>
-                <h1 style={styles.title}>IndWish</h1>   
+                <h1 style={styles.title}>IndWish</h1>
 
                 <div style={styles.centerColumn}>
                     {/* create a tag with a title for Who we are */}
-                    <h2 style={styles.subTitles}>Who we are</h2>
+                    <h2 style={styles.subTitles}>Who we are?</h2>
                     <p>
-                        IndWish is a web application that allows users to search for companies and view their information.
-                        The application was built in the context of the Information Retrieval course at the Faculty of Engineering of University of Porto.
-                        Developed by Bruno Rosendo, João Mesquita and Rui Alves, students of the Master in Computer Science and Engineering, 
-                        in the 2022/2023 academic year, the application aims to provide a simple and intuitive way to search for companies and view their information.
+                        IndWish is a web application targeted for users seeking
+                        their dream job. It allows users to search for companies
+                        and view their information, from the perspective of
+                        their workers. The application was built in the context
+                        of the Information Retrieval course at FEUP. Developed
+                        by Bruno Rosendo, João Mesquita and Rui Alves, the
+                        application aims to provide a simple and intuitive way
+                        to search for companies and view their information.
                     </p>
 
-                    <h2 style={styles.subTitles}>How to perform a search</h2>
+                    <h2 style={styles.subTitles}>How to perform a search?</h2>
                     <p>
-                        There are a lot of searches that can be made. The most basic one is simply search for a specific topic, using 
-                        the default search on the company name, industry and description.
-                        <br/>
-
-                        The system also allows term boost searches, where the user can specify a term and a boost value. The boost value
-                        is a number that indicates how much more important that term is than the others. For example, if the user searches for
-                        "economy in technology^2" with a boost value of 2 in technology, the results retrieved will focus
-                        more on the technology than in economy.
+                        There are a lot of searches that can be made. The most
+                        basic one is simply search for a specific topic, using
+                        the default search on the company name, industry and
+                        description.
+                        <br />
+                        The system also supports{" "}
+                        <i>
+                            wildcards, fuzzying, proximity, range, field
+                        </i> and <i>term boosts</i> and more. These querying
+                        capabilities are enabled by default, so the Text Input
+                        in the Home Page supports them. To become familiar with
+                        all the possible queries, we recommend you to visit the{" "}
+                        <a href="https://solr.apache.org/guide/6_6/the-standard-query-parser.html">
+                            Solr documentation.
+                        </a>
                     </p>
 
-
-                    <h2 style={styles.subTitles}>How to view company's information</h2>
+                    <h2 style={styles.subTitles}>
+                        How to view company's information?
+                    </h2>
                     <p>
-                        In the results page, after searching, the user as two columns: one with all the results, and other showing the details of the selected
-                        result. The details of the company are shown in the right column of the screen, in a card. To see the details
-                        of other result/company, you simply have to right click on the desired result on the left column and the details on
-                        the right one will switch to the new company.
+                        In the results page, after searching, the user has 2
+                        columns: one with all the results, and other showing the
+                        details of the selected result. The details of the
+                        company are shown in the right column of the screen, in
+                        a card. To see the details of other company, you simply
+                        have to left click on the desired result on the left
+                        column and the details will show up on the right.
                     </p>
 
-                    <h2 style={styles.subTitles}>How does the system get the results</h2>
+                    <h2 style={styles.subTitles}>
+                        How does the system get the results?
+                    </h2>
                     <p>
-                        The application is built using React. 
-                        <br/>
-                        The data is indexed in Solr and when performing a search, the system retrieves the results provided from Solr and shows them to the user.
+                        The application is built using React.
+                        <br />
+                        The data is indexed in Solr and when performing a
+                        search, the system retrieves the results provided from
+                        Solr and shows them to the user.
                     </p>
                 </div>
             </div>
