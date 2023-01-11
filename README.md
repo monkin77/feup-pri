@@ -1,24 +1,27 @@
-# PRI Project <NAME TO DECIDE>
- 
-Run SOLR instance with docker:
-```console
-cd solr
-docker build -t solr-pri .
-docker run --name solr-pri-container -p 8983:8983 -it solr-pri
-```
+# PRI Project - IndWish
+The aim of this project is to develop an Information Retrieval System, in the context of Company Reviews. This program uses thousands of company reviews to provide a search engine that allows users to find companies that match their interests and see what other people think about them.
 
-### Working directory -> root folder
+---
 
-### Important requests
+## Setup & Structure
+The project is divided into 3 main parts:
+1. Data Preparation (`src/`) - Python scripts to clean, process and prepare the data to be imported into **Solr**. There is a **Makefile** to run the targets of this step.
+2. Document Indexing and Retrieval (`solr/`) - **Solr** configuration files and scripts to import the data into the search engine.
+3. User Interface (`frontend/`) - **React** application that provides a user interface to interact with the search engine and view the results.
 
-**suggester**: http://localhost:8983/solr/reviews/suggest?q.op=AND&q=tech
+---
 
-**spellchecker**: http://localhost:8983/solr/reviews/spellcheck?q=teck
+## Screenshots
+<p>Homepage of the application.</p> 
 
-**faceting**: http://localhost:8983/solr/reviews/select?q=*:*&facet=true&facet.field=industry&facet.field=employees&facet.field=revenue&facet.field=interview.experience&facet.field=interview.difficulty&facet.limit=1000
+![Homepage](docs/milestone3/homepage.png)
 
-Possible fields to use facets: industry, employees, revenue, interview.experience, interview.difficulty
+<p>Results Page for a query</p>
 
-This query also returns results (response field) but that can be ignored, only facet_counts matters.
+![Results Page](docs/milestone3/resultsPage.png)
 
-Use facet.sort=<count/index> to alternate between most popular and lexicographic order
+<p>Autocomplete functionality</p>
+
+![Autocomplete functionality](docs/milestone3/autocomplete.png)
+
+
