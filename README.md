@@ -1,6 +1,8 @@
 # PRI Project - IndWish
 The aim of this project is to develop an Information Retrieval System, in the context of Company Reviews. This program uses thousands of company reviews to provide a search engine that allows users to find companies that match their interests and see what other people think about them.
 
+A final report of the project with implementation details and results can be found [here](docs/milestone3/report-69.pdf).
+
 ---
 
 ## Setup & Structure
